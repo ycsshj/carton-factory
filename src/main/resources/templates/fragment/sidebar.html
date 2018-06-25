@@ -5,7 +5,7 @@
     <ul>
         <li>
             <a href="#" data-target=".dashboard-menu" class="nav-header" data-toggle="collapse">
-                <i class="fa fa-fw fa-dashboard"></i> Dashboard<i class="fa fa-collapse"></i>
+                <i class="fa fa-fw fa-dashboard"></i> 菜单列表<i class="fa fa-collapse"></i>
             </a>
         </li>
         <li>
@@ -16,8 +16,23 @@
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/uploadFileList}">
-                        <span class="fa fa-caret-right"></span> 文件管理
+                    <a th:href="@{/cartonCategory/cartonCategoryList}">
+                        <span class="fa fa-caret-right"></span> 纸箱规格管理
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/cartonCategory/cartonCategoryList}">
+                        <span class="fa fa-caret-right"></span> 纸箱库存管理
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/cartonCategory/cartonCategoryList}">
+                        <span class="fa fa-caret-right"></span> 客户管理
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/cartonCategory/cartonCategoryList}">
+                        <span class="fa fa-caret-right"></span> 订单管理
                     </a>
                 </li>
             </ul>

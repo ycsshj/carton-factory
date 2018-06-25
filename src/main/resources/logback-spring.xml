@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <contextName>baoli-file-server</contextName>
+    <contextName>carton-factory</contextName>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -10,7 +10,7 @@
 
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 如果配置中不存在, 给出默认的 -->
-        <file>${LOG_PATH:-/usr/local/tomcat/logs/}/${LOG_FILE:-baoli.log}</file>
+        <file>${LOG_PATH:-/usr/local/tomcat/logs/}/${LOG_FILE:-carton.log}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- rollover daily -->
             <fileNamePattern>${LOG_FILE}-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>

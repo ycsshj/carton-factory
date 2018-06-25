@@ -8,7 +8,7 @@ package com.carton.exception;
  *
  * @author Spring
  */
-public class BLBaseException extends Exception {
+public class BaseException extends Exception {
 
     private static final long serialVersionUID = 4374039979963462421L;
 
@@ -16,24 +16,24 @@ public class BLBaseException extends Exception {
     protected String errorMsg;
     protected Object[] args;
 
-    public BLBaseException(String errorCode, String errorMsg) {
+    public BaseException(String errorCode, String errorMsg) {
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }
 
-    public BLBaseException(String errorCode, String errorMsg, Object[] args) {
+    public BaseException(String errorCode, String errorMsg, Object[] args) {
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
         this.args = args;
     }
 
-    public BLBaseException(String errorCode, String errorMsg, Throwable t) {
+    public BaseException(String errorCode, String errorMsg, Throwable t) {
         super(errorMsg, t);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }
 
-    public BLBaseException(String errorCode, String errorMsg, Object[] args, Throwable t) {
+    public BaseException(String errorCode, String errorMsg, Object[] args, Throwable t) {
         super(errorMsg, t);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;

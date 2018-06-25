@@ -1,11 +1,10 @@
-package com.carton.util;
+package com.carton.service;
 
 /************************************************************
- * @author jerry.zheng
- * @Description
- * @date 2017-09-22 8:58
+ * @Description:
+ * @Author: zhengrui
+ * @Date 2018-06-23 20:54
  ************************************************************/
-public class BaoLiBeanUtil {
 
-
+public interface AccountService {
 }

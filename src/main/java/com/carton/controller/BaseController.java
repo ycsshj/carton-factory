@@ -1,6 +1,6 @@
 package com.carton.controller;
 
-import com.carton.exception.BLServiceException;
+import com.carton.exception.BaseServiceException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -37,10 +37,10 @@ public class BaseController<T> {
      * @return
      * @throws IOException
      */
-    @ExceptionHandler(BLServiceException.class)
+    @ExceptionHandler({BaseServiceException.class, Exception.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String handleException(BLServiceException si) throws IOException {
+    public String handleException(BaseServiceException si) throws IOException {
         logger.error("handle exception:", si);
         Map<String, String> json = new HashMap<>();
         json.put("status", "error");

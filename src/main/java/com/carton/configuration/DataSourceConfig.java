@@ -3,13 +3,8 @@ package com.carton.configuration;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import org.apache.catalina.Context;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.tomcat.util.descriptor.web.ContextResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -17,10 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,8 +63,8 @@ public class DataSourceConfig {
     }
 
     //destroy-method="close"的作用是当数据库连接不使用的时候,就把该连接重新放到数据池中,方便下次使用调用.
-    @Bean(destroyMethod =  "close", name = "dataSource")
-    @Profile("dev")
+    @Bean(destroyMethod = "close", name = "dataSource")
+    @Profile("dev,pretest,test,prod")
     public DataSource dataSourceByDruid() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(env.getProperty("spring.datasource.url"));
@@ -87,51 +80,6 @@ public class DataSourceConfig {
         dataSource.setTestWhileIdle(true);//建议配置为true，不影响性能，并且保证安全性。
         dataSource.setPoolPreparedStatements(false);//是否缓存preparedStatement，也就是PSCache
         return dataSource;
-    }
-
-    @Bean(name = "dataSource")
-    @Profile("pretest,test,prod")
-    public TomcatEmbeddedServletContainerFactory tomcatFactory() {
-        return new TomcatEmbeddedServletContainerFactory() {
-            @Override
-            protected TomcatEmbeddedServletContainer getTomcatEmbeddedServletContainer(
-                    Tomcat tomcat) {
-                tomcat.enableNaming();
-                return super.getTomcatEmbeddedServletContainer(tomcat);
-            }
-            @Override
-            protected void postProcessContext(Context context) {
-                ContextResource resource = new ContextResource();
-                resource.setName(env.getProperty("profile.datasource.jndiName"));
-                resource.setType(DataSource.class.getName());
-                resource.setProperty("driverClassName", env.getProperty("spring.datasource.driverClassName"));
-                resource.setProperty("url", env.getProperty("spring.datasource.url"));
-                resource.setProperty("username", env.getProperty("spring.datasource.username"));
-                resource.setProperty("password", env.getProperty("spring.datasource.password"));
-
-                context.getNamingResources().addResource(resource);
-            }
-        };
-    }
-
-    //在tomcat中配置jndi数据源
-    /*@Bean()
-    @Profile("pretest,test,prod")
-    public DataSource dataSourceByJndi() {
-        JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
-        DataSource dataSource = dataSourceLookup.getDataSource(env.getProperty("profile.datasource.jndiName"));
-        return dataSource;
-    }*/
-
-    @Bean(name = "dataSource")
-    @Profile("pretest,test,prod")
-    public DataSource jndiDataSource() throws IllegalArgumentException, NamingException {
-        JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
-        bean.setJndiName(env.getProperty("profile.datasource.jndiName"));
-        bean.setProxyInterface(DataSource.class);
-        bean.setLookupOnStartup(false);
-        bean.afterPropertiesSet();
-        return (DataSource)bean.getObject();
     }
 
     @Bean
