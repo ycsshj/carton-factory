@@ -1,6 +1,8 @@
 package com.carton.model;
 
-public class Lov {
+import com.carton.model.base.BaseEntity;
+
+public class Lov extends BaseEntity{
 
     private Integer id;
 

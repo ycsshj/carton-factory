@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*******************************************
- * @Description: TODO
+ * @Description:
  * @Author: jerry.zheng
  * @Date Created in 17:28 2018\2\27 0027        
  *******************************************/
@@ -23,9 +23,9 @@ public class FilterConfig {
         DelegatingFilterProxy httpBasicFilter = new DelegatingFilterProxy();
         registration.setFilter(httpBasicFilter);
 
-        Map<String,String> m = new HashMap<>();
-        m.put("targetBeanName","securityFilter");
-        m.put("targetFilterLifecycle","true");
+        Map<String, String> m = new HashMap<>();
+        m.put("targetBeanName", "securityFilter");
+        m.put("targetFilterLifecycle", "true");
         registration.setInitParameters(m);
 
         registration.addUrlPatterns("/*");

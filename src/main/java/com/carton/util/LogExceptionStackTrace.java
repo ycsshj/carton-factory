@@ -31,8 +31,8 @@ public class LogExceptionStackTrace {
             try {
                 pw.close();
                 sw.close();
-            } catch (IOException var14) {
-                var14.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

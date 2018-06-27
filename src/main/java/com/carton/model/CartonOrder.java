@@ -1,8 +1,10 @@
 package com.carton.model;
 
+import com.carton.model.base.BaseEntity;
+
 import java.util.Date;
 
-public class CartonOrder {
+public class CartonOrder extends BaseEntity {
 
     private Integer id;
 
@@ -15,16 +17,6 @@ public class CartonOrder {
     private Date publishDate;
 
     private String comment;
-
-    private Date createDate;
-
-    private String createUser;
-
-    private Date updateDate;
-
-    private String updateUser;
-
-    private Integer valid;
 
     public Integer getId() {
         return id;
@@ -72,45 +64,5 @@ public class CartonOrder {
 
     public void setComment(String comment) {
         this.comment = comment == null ? null : comment.trim();
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    public Integer getValid() {
-        return valid;
-    }
-
-    public void setValid(Integer valid) {
-        this.valid = valid;
     }
 }

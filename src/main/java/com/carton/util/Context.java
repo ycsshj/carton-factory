@@ -13,4 +13,6 @@ public class Context {
 
     //stock
     public static final String GOODS_NAME = "xiao mi 8";
+
+    public static final String CARTON_CATEGORY = "CARTON_CATEGORY";
 }

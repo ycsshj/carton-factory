@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<form role="form" th:action="@{/cartonCategory/addCartonCategory}" id="addCartonCategoryForm" class="form-horizontal" method="post">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="cartonBigType">纸箱大类: </label>
+        <div class="col-sm-4">
+            <select class="form-control" name="cartonBigType" id="cartonBigType" onchange="cartonBigTypeChange(this.value);" required="true">
+                <option>请选择...</option>
+                <option th:each="bigCategoryLov:${bigCategoryLovList}" th:value="${bigCategoryLov.lovCode}"
+                        th:text="${bigCategoryLov.lovValue}"></option>
+            </select>
+        </div>
+
+        <label class="col-sm-2 control-label" for="cartonSmallType">纸箱小类: </label>
+        <div class="col-sm-4">
+            <select class="form-control" name="cartonSmallType" id="cartonSmallType" required="true">
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="cartonLength">纸箱长: </label>
+        <div class="col-sm-4">
+            <input type="number" id="cartonLength" name="cartonLength" class="form-control" onchange="cartonSizeCalculate()" required="true"/>
+        </div>
+
+        <label class="col-sm-2 control-label" for="cartonWidth">纸箱宽: </label>
+        <div class="col-sm-4">
+            <input type="number" id="cartonWidth" name="cartonWidth" class="form-control" onchange="cartonSizeCalculate()" required="true"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="cartonHeight">纸箱高: </label>
+        <div class="col-sm-4">
+            <input type="number" id="cartonHeight" name="cartonHeight" class="form-control" onchange="cartonSizeCalculate()" required="true"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="cartonStandard">材料规格: </label>
+        <div class="col-sm-4">
+            <input type="number" id="cartonStandard" name="cartonStandard" class="form-control" readonly="readonly"/>
+        </div>
+
+        <label class="col-sm-2 control-label" for="criticalStandard">压线规格: </label>
+        <div class="col-sm-4">
+            <input type="number" id="criticalStandard" name="criticalStandard" class="form-control"/>
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

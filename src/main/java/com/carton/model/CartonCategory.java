@@ -1,14 +1,18 @@
 package com.carton.model;
 
-import java.util.Date;
+import com.carton.model.base.BaseEntity;
 
-public class CartonCategory {
+public class CartonCategory extends BaseEntity {
 
     private Integer id;
 
     private String cartonBigType;
 
+    private String cartonBigTypeValue;
+
     private String cartonSmallType;
+
+    private String cartonSmallTypeValue;
 
     private Double cartonLength;
 
@@ -19,16 +23,6 @@ public class CartonCategory {
     private String cartonStandard;
 
     private String criticalStandard;
-
-    private Date createDate;
-
-    private String createUser;
-
-    private Date updateDate;
-
-    private String updateUser;
-
-    private Integer valid;
 
     public Integer getId() {
         return id;
@@ -94,43 +88,19 @@ public class CartonCategory {
         this.criticalStandard = criticalStandard == null ? null : criticalStandard.trim();
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public String getCartonBigTypeValue() {
+        return cartonBigTypeValue;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCartonBigTypeValue(String cartonBigTypeValue) {
+        this.cartonBigTypeValue = cartonBigTypeValue;
     }
 
-    public String getCreateUser() {
-        return createUser;
+    public String getCartonSmallTypeValue() {
+        return cartonSmallTypeValue;
     }
 
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    public Integer getValid() {
-        return valid;
-    }
-
-    public void setValid(Integer valid) {
-        this.valid = valid;
+    public void setCartonSmallTypeValue(String cartonSmallTypeValue) {
+        this.cartonSmallTypeValue = cartonSmallTypeValue;
     }
 }

@@ -1,19 +1,17 @@
 <!doctype html>
 <!--suppress ThymeleafVariablesResolveInspection -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="layout">
-
 <body class=" theme-blue" th:with="timestamp=${#dates.format(#dates.createNow(),'yyyyMMddHH')}">
 
 <div class="content" layout:fragment="content">
 
     <div class="header">
-        <h1 class="page-title">纸箱规格历史列表</h1>
+        <h1 class="page-title">纸箱规格管理列表</h1>
         <ul class="breadcrumb">
             <li><a th:href="@{/home}">首页</a></li>
-            <li class="active">纸箱规格历史列表</li>
+            <li class="active">纸箱规格管理列表</li>
         </ul>
     </div>
-
 
     <div class="main-content">
         <form method="get" th:action="@{/cartonCategory/cartonCategoryList}" id="searchForm">
@@ -23,20 +21,28 @@
                 <div class="form-group">
                     <label class="col-md-1 control-label">纸箱大类: </label>
                     <div class="col-md-2">
-                        <input class="input-xlarge form-control" type="text" name="fileName" placeholder="请选择纸箱大类" th:value="${fileName}"/>
+                        <select class="form-control" name="bigCategoryParam" id="bigCategoryParam" onchange="cartonBigTypeChange(this.value);">
+                            <option>请选择...</option>
+                            <option th:each="bigCategoryLov:${bigCategoryLovList}" th:value="${bigCategoryLov.lovCode}"
+                                    th:text="${bigCategoryLov.lovValue}" th:selected="${bigCategoryLov.lovCode eq bigCategoryParam}"></option>
+                        </select>
                     </div>
 
                     <label class="col-md-1 control-label">纸箱小类: </label>
                     <div class="col-md-2">
-                        <input class="input-xlarge form-control" type="text" name="createUser" placeholder="请选择纸箱小类" th:value="${createUser}"/>
+                        <select class="form-control" name="smallCategoryParam" id="smallCategoryParam">
+                            <option>请选择...</option>
+                            <option th:each="smallCategoryLov:${smallCategoryLovList}" th:value="${smallCategoryLov.lovCode}"
+                                    th:text="${smallCategoryLov.lovValue}" th:selected="${smallCategoryLov.lovCode eq smallCategoryParam}"></option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="btn-toolbar list-toolbar" style="float: right; margin-right: 40%">
                     <button type="submit" class="btn btn-default" placeholder="查询">搜索</button>
-                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#addCartonCategoryModal"><i class="fa fa-plus"></i> 新增</a>
-                    <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteBatchFileModal">批量删除</a>
+                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#addCartonCategoryModal" th:onclick="'toAddPage()'"><i class="fa fa-plus"></i> 新增</a>
                 </div>
+
             </div>
         </form>
 
@@ -58,64 +64,67 @@
                     <td>
                         <input type="checkbox" name="choseElement" th:value="${cartonCategory.id}" onclick="clickElement(this)"/>
                     </td>
-                    <td th:text="${cartonCategory.cartonBigType}">cartonBigType</td>
-                    <td th:text="${cartonCategory.cartonSmallType}">cartonSmallType</td>
+                    <td th:text="${cartonCategory.cartonBigTypeValue}">cartonBigTypeValue</td>
+                    <td th:text="${cartonCategory.cartonSmallTypeValue}">cartonSmallTypeValue</td>
                     <td th:text="${cartonCategory.cartonLength}">cartonLength</td>
                     <td th:text="${cartonCategory.cartonWidth}">cartonWidth</td>
                     <td th:text="${cartonCategory.cartonHeight}">cartonHeight</td>
                     <td th:text="${cartonCategory.cartonStandard}">cartonStandard</td>
                     <td th:text="${cartonCategory.criticalStandard}">criticalStandard</td>
-                    <td><a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" th:onclick="'setDeleteFile(\'' + ${cartonCategory.id} + '\')'">删除</a></td>
+                    <td>
+                        <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#editCartonCategoryModal" th:onclick="'toEditPage(' + ${cartonCategory.id} + ')'">修改</a>
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" th:onclick="'setDeleteFile(\'' + ${cartonCategory.id} + '\')'">删除</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
+        <!--分页-->
         <div th:replace="fragment/page :: page">page</div>
+        <!--底部-->
+        <div th:replace="fragment/footer :: footer">footer</div>
+    </div>
 
-        <div class="modal small fade" id="addCartonCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCartonCategoryModal" aria-hidden="true"  data-backdrop="static">
-            <div class="modal-dialog" style="width:40%;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <a type="button" class="close" data-dismiss="modal" aria-hidden="true" id="reloadFileList">×</a>
-                        <h2 id="addCartonCategoryLabel">新增纸箱规格</h2>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form" action="javascript:void(0)" id="addCartonCategoryForm">
-                            <div class="form-group">
-                                <label class="col-md-2 control-label" for="cartonBigType">纸箱大类: </label>
-                                <div class="col-md-3">
-                                    <select class="form-control" name="cartonBigType" id="cartonBigType">
-                                        <option>卡通箱</option>
-                                        <option>床箱</option>
-                                        <option>纸片</option>
-                                    </select>
-                                </div>
-
-                                <label class="col-md-2 control-label" for="cartonSmallType">纸箱小类: </label>
-                                <div class="col-md-3">
-                                    <select class="form-control" name="cartonSmallType" id="cartonSmallType">
-                                        <option>三层</option>
-                                        <option>五层</option>
-                                        <option>办公台</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-                        </form>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" id="addCartonCategoryBtn">保存</button>
-                    </div>
+    <!--新增模态框-->
+    <div class="modal small fade" id="addCartonCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCartonCategoryModal" aria-hidden="true"  data-backdrop="static">
+        <div class="modal-dialog" style="width:40%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                    <h2 id="addCartonCategoryLabel">新增纸箱规格</h2>
+                </div>
+                <div class="modal-body" id="addCartonCategoryBody">
 
                 </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="addCartonCategoryBtn">保存</button>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <div th:replace="fragment/footer :: footer">footer</div>
+    <!--修改模态框-->
+    <div class="modal small fade" id="editCartonCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCartonCategoryModal" aria-hidden="true"  data-backdrop="static">
+        <div class="modal-dialog" style="width:40%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                    <h2 id="editCartonCategoryLabel">修改纸箱规格</h2>
+                </div>
+                <div class="modal-body" id="editCartonCategoryBody">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="editCartonCategoryBtn">保存</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <!--必须要在content里面-->

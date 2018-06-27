@@ -1,3 +1,5 @@
+var basePath = window.location.protocol + "//" + window.location.host;
+
 function activeTab(id) {
     $("#" + id).addClass('active').siblings().removeClass('active');
 }
@@ -59,6 +61,39 @@ function clickElement(obj) {
             $("#checkAll").prop("checked", true);
         }
     }
+}
+
+/**
+ * https://github.hubspot.com/messenger/
+ * @param message
+ * @param code
+ */
+function messageAlert(message, code) {
+    if (code == 0) {
+        $.globalMessenger().post({
+            message: message,
+            type: 'info',
+            hideAfter: 1,
+            showCloseButton: true,
+            hideOnNavigate: true
+        });
+
+        //延迟一秒加载列表, 否则提示信息会被刷没有
+        setTimeout("reload()", 1000);
+
+    } else {
+        $.globalMessenger().post({
+            message: message,
+            type: 'error',
+            hideAfter: 1,
+            showCloseButton: true,
+            hideOnNavigate: true
+        });
+    }
+}
+
+function reload() {
+    window.parent.location.reload(true);
 }
 
 

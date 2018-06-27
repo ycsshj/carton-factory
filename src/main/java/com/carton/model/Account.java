@@ -1,8 +1,8 @@
 package com.carton.model;
 
-import java.util.Date;
+import com.carton.model.base.BaseEntity;
 
-public class Account {
+public class Account extends BaseEntity {
 
     private Integer id;
 
@@ -17,16 +17,6 @@ public class Account {
     private String phone;
 
     private String hobby;
-
-    private Date createDate;
-
-    private String createUser;
-
-    private Date updateDate;
-
-    private String updateUser;
-
-    private Integer valid;
 
     public Integer getId() {
         return id;
@@ -82,45 +72,5 @@ public class Account {
 
     public void setHobby(String hobby) {
         this.hobby = hobby == null ? null : hobby.trim();
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    public Integer getValid() {
-        return valid;
-    }
-
-    public void setValid(Integer valid) {
-        this.valid = valid;
     }
 }

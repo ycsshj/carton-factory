@@ -9,8 +9,12 @@ public class CartonCategoryVO extends BaseVO {
     //纸箱大类(eg:卡通箱,床箱,纸片), 存lov_code
     private String cartonBigType;
 
+    private String cartonBigTypeValue;
+
     //纸箱小类(eg:三层,五层,办公台,中封), 存lov_code
     private String cartonSmallType;
+
+    private String cartonSmallTypeValue;
 
     //纸箱长
     private Double cartonLength;
@@ -89,5 +93,21 @@ public class CartonCategoryVO extends BaseVO {
 
     public void setCriticalStandard(String criticalStandard) {
         this.criticalStandard = criticalStandard == null ? null : criticalStandard.trim();
+    }
+
+    public String getCartonBigTypeValue() {
+        return cartonBigTypeValue;
+    }
+
+    public void setCartonBigTypeValue(String cartonBigTypeValue) {
+        this.cartonBigTypeValue = cartonBigTypeValue;
+    }
+
+    public String getCartonSmallTypeValue() {
+        return cartonSmallTypeValue;
+    }
+
+    public void setCartonSmallTypeValue(String cartonSmallTypeValue) {
+        this.cartonSmallTypeValue = cartonSmallTypeValue;
     }
 }

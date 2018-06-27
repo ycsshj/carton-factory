@@ -5,7 +5,9 @@
 
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="carton_big_type" property="cartonBigType" jdbcType="VARCHAR" />
+    <result column="cartonBigValue" property="cartonBigValue" jdbcType="VARCHAR" />
     <result column="carton_small_type" property="cartonSmallType" jdbcType="VARCHAR" />
+    <result column="cartonSmallValue" property="cartonSmallValue" jdbcType="VARCHAR" />
     <result column="carton_length" property="cartonLength" jdbcType="DOUBLE" />
     <result column="carton_width" property="cartonWidth" jdbcType="DOUBLE" />
     <result column="carton_height" property="cartonHeight" jdbcType="DOUBLE" />
@@ -89,8 +91,12 @@
     <if test="distinct" >
       distinct
     </if>
-    <include refid="Base_Column_List" />
-    from carton_category
+    carton.id, carton.carton_big_type, carton.carton_small_type, carton.carton_length, carton.carton_width, carton.carton_height,
+    carton.carton_standard, carton.critical_standard, carton.create_date, carton.create_user, carton.update_date, carton.update_user,
+    carton.valid, bigType.lov_value as cartonBigTypeValue,smallType.lov_value as cartonSmallTypeValue
+    from carton_category carton
+    left join lov bigType on carton.carton_big_type = bigType.lov_code and bigType.category = "CARTON_CATEGORY"
+    left join lov smallType on carton.carton_small_type = smallType.lov_code and smallType.category = "CARTON_CATEGORY"
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

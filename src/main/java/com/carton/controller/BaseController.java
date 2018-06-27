@@ -37,7 +37,7 @@ public class BaseController<T> {
      * @return
      * @throws IOException
      */
-    @ExceptionHandler({BaseServiceException.class, Exception.class})
+    @ExceptionHandler({BaseServiceException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String handleException(BaseServiceException si) throws IOException {

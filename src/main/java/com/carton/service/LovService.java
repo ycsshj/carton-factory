@@ -1,5 +1,9 @@
 package com.carton.service;
 
+import com.carton.vo.LovVO;
+
+import java.util.List;
+
 /************************************************************
  * @Description:
  * @Author: zhengrui
@@ -7,4 +11,7 @@ package com.carton.service;
  ************************************************************/
 
 public interface LovService {
+    List<LovVO> getLovByCondition(String category, String parentCode, String lovCode);
+
+    List<LovVO> batchInsertLov(List<LovVO> lovVOList);
 }
