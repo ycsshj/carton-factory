@@ -1,5 +1,6 @@
 package com.carton.vo;
 
+import com.carton.model.CartonCategory;
 import com.carton.vo.base.BaseVO;
 
 public class CartonStockVO extends BaseVO {
@@ -15,6 +16,8 @@ public class CartonStockVO extends BaseVO {
     private Integer stockLeft;
 
     private Double costPrice;
+
+    private CartonCategoryVO cartonCategoryVO;
 
     public Integer getId() {
         return id;
@@ -62,5 +65,13 @@ public class CartonStockVO extends BaseVO {
 
     public void setCostPrice(Double costPrice) {
         this.costPrice = costPrice;
+    }
+
+    public CartonCategoryVO getCartonCategoryVO() {
+        return cartonCategoryVO;
+    }
+
+    public void setCartonCategoryVO(CartonCategoryVO cartonCategoryVO) {
+        this.cartonCategoryVO = cartonCategoryVO;
     }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<form role="form" th:action="@{/cartonStock/addCartonStock}" id="addCartonCategoryForm" class="form-horizontal" method="post">
+    <div class="form-group">
+        <label class="col-md-2 control-label">纸箱规格: </label>
+        <div class="col-md-4">
+            <select class="form-control" name="cartonCategory" id="cartonCategory">
+            </select>
+        </div>
+
+        <label class="col-sm-2 control-label" for="stock">总库存: </label>
+        <div class="col-sm-4">
+            <input type="number" id="stock" name="stock" class="form-control" required="true"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="stockLeft">剩余库存: </label>
+        <div class="col-sm-4">
+            <input type="number" id="stockLeft" name="stockLeft" class="form-control" required="true"/>
+        </div>
+
+        <label class="col-sm-2 control-label" for="costPrice">成本单价: </label>
+        <div class="col-sm-4">
+            <input type="number" id="costPrice" name="costPrice" class="form-control" required="true"/>
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

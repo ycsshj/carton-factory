@@ -9,6 +9,7 @@ import com.carton.vo.CartonCategoryVO;
 import com.carton.vo.LovVO;
 import com.carton.vo.base.Result;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,4 +105,24 @@ public class CartonCategoryController extends BaseController<CartonCategoryVO> {
         return cartonCategoryService.editCartonCategory(cartonCategory);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/getSimpleCartonCategoryList", method = RequestMethod.GET)
+    public Result getSimpleCartonCategoryList() {
+        PageInfo<CartonCategoryVO> pageInfo = cartonCategoryService.getCartonCategoryList(1, 9999, null);
+        List<CartonCategoryVO> categoryVOList = pageInfo.getList();
+        List<Map<String, Object>> categoryList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(categoryVOList)) {
+            for (CartonCategoryVO cartonCategoryVO : categoryVOList) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", cartonCategoryVO.getId());
+                map.put("simpleName", cartonCategoryVO.getCartonBigTypeValue() + " " + cartonCategoryVO.getCartonSmallTypeValue()
+                        + " 长:" + cartonCategoryVO.getCartonLength() + " 宽:" + cartonCategoryVO.getCartonWidth() + " 高:" + cartonCategoryVO.getCartonHeight());
+                categoryList.add(map);
+            }
+        }
+
+        Result result = new Result();
+        result.setData(categoryList);
+        return result;
+    }
 }

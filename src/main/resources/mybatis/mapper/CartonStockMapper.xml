@@ -14,6 +14,17 @@
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
+
+    <association property="cartonCategory" javaType="com.carton.model.CartonCategory">
+      <id column="carton_category_id" property="id" jdbcType="INTEGER" />
+      <result column="carton_big_type" property="cartonBigType" jdbcType="VARCHAR" />
+      <result column="cartonBigValue" property="cartonBigValue" jdbcType="VARCHAR" />
+      <result column="carton_small_type" property="cartonSmallType" jdbcType="VARCHAR" />
+      <result column="cartonSmallValue" property="cartonSmallValue" jdbcType="VARCHAR" />
+      <result column="carton_standard" property="cartonStandard" jdbcType="VARCHAR" />
+      <result column="critical_standard" property="criticalStandard" jdbcType="VARCHAR" />
+    </association>
+
   </resultMap>
   <sql id="Example_Where_Clause" >
 

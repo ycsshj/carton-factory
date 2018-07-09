@@ -16,6 +16,8 @@ public class CartonStock extends BaseEntity {
 
     private Double costPrice;
 
+    private CartonCategory cartonCategory;
+
     public Integer getId() {
         return id;
     }
@@ -62,5 +64,13 @@ public class CartonStock extends BaseEntity {
 
     public void setCostPrice(Double costPrice) {
         this.costPrice = costPrice;
+    }
+
+    public CartonCategory getCartonCategory() {
+        return cartonCategory;
+    }
+
+    public void setCartonCategory(CartonCategory cartonCategory) {
+        this.cartonCategory = cartonCategory;
     }
 }

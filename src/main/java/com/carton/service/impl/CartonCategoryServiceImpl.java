@@ -28,6 +28,7 @@ import java.util.Map;
  * @Date 2018-06-23 20:54
  ************************************************************/
 
+@SuppressWarnings("Duplicates")
 @Service
 public class CartonCategoryServiceImpl implements CartonCategoryService {
     private static final Logger logger = LoggerFactory.getLogger(CartonCategoryServiceImpl.class);
@@ -44,7 +45,7 @@ public class CartonCategoryServiceImpl implements CartonCategoryService {
 
             CartonCategoryExample query = new CartonCategoryExample();
             List<CartonCategory> cartonCategoryList = cartonCategoryMapper.selectByExample(query);
-            logger.info(String.format("CartonCategoryList is: %s", JSON.toJSONString(params)));
+            logger.info(String.format("CartonCategoryList is: %s", JSON.toJSONString(cartonCategoryList)));
 
             return new PageInfo<>(BaseBeanUtil.convertCartonCategoryList2VOs(cartonCategoryList));
 

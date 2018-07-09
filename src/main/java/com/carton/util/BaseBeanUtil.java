@@ -1,11 +1,14 @@
 package com.carton.util;
 
 import com.carton.model.CartonCategory;
+import com.carton.model.CartonStock;
 import com.carton.model.Lov;
 import com.carton.vo.CartonCategoryVO;
+import com.carton.vo.CartonStockVO;
 import com.carton.vo.LovVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,5 +74,29 @@ public class BaseBeanUtil {
             BeanUtils.copyProperties(cartonCategoryVO, cartonCategory);
         }
         return cartonCategory;
+    }
+
+    public static List<CartonStockVO> convertCartonStockList2VOs(List<CartonStock> cartonStockList) {
+        List<CartonStockVO> cartonStockVOList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(cartonStockList)) {
+            cartonStockList.forEach(item -> cartonStockVOList.add(convertCartonStock2VO(item)));
+        }
+        return cartonStockVOList;
+    }
+
+    public static CartonStockVO convertCartonStock2VO(CartonStock cartonStock) {
+        CartonStockVO cartonStockVO = new CartonStockVO();
+        if (cartonStock != null) {
+            BeanUtils.copyProperties(cartonStock, cartonStockVO);
+        }
+        return cartonStockVO;
+    }
+
+    public static CartonStock convertCartonStockVO2Entity(CartonStockVO cartonStockVO) {
+        CartonStock cartonStock = new CartonStock();
+        if (cartonStockVO != null) {
+            BeanUtils.copyProperties(cartonStockVO, cartonStock);
+        }
+        return cartonStock;
     }
 }
