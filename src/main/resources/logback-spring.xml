@@ -15,7 +15,7 @@
             <!-- rollover daily -->
             <fileNamePattern>${LOG_PATH:-/usr/local/tomcat/logs/}/${LOG_FILE}-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
             <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 50GB -->
-            <maxFileSize>5KB</maxFileSize>
+            <maxFileSize>100MB</maxFileSize>
             <maxHistory>60</maxHistory>
             <totalSizeCap>50GB</totalSizeCap>
         </rollingPolicy>
@@ -44,10 +44,13 @@
         </root>
     </springProfile>-->
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 
+    <!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
+    <!-- com.carton为根包，也就是只要是发生在这个根包下面的所有日志操作行为的权限都是DEBUG -->
+    <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
     <logger name="com.carton" level="DEBUG">
         <appender-ref ref="ROLLING"/>
     </logger>
