@@ -1,6 +1,5 @@
 package com.carton.vo;
 
-import com.carton.model.CartonCategory;
 import com.carton.vo.base.BaseVO;
 
 public class CartonStockVO extends BaseVO {
@@ -9,7 +8,7 @@ public class CartonStockVO extends BaseVO {
 
     private String name;
 
-    private String cartonCategoryId;
+    private Integer cartonCategoryId;
 
     private Integer stock;
 
@@ -35,12 +34,12 @@ public class CartonStockVO extends BaseVO {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getCartonCategoryId() {
+    public Integer getCartonCategoryId() {
         return cartonCategoryId;
     }
 
-    public void setCartonCategoryId(String cartonCategoryId) {
-        this.cartonCategoryId = cartonCategoryId == null ? null : cartonCategoryId.trim();
+    public void setCartonCategoryId(Integer cartonCategoryId) {
+        this.cartonCategoryId = cartonCategoryId;
     }
 
     public Integer getStock() {

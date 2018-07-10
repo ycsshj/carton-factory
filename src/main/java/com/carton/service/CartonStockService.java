@@ -14,7 +14,7 @@ import java.util.Map;
  ************************************************************/
 
 public interface CartonStockService {
-    PageInfo<CartonStockVO> getCartonStockList(Integer pageNum, Integer pageSize, Map<String, Object> params);
+    PageInfo<CartonStock> getCartonStockList(Integer pageNum, Integer pageSize, Map<String, Object> params);
 
     CartonStock getCartonStockDetail(Integer id);
 

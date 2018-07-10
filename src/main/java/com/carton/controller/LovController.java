@@ -22,7 +22,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/lov")
-public class LovController extends BaseController<CartonCategoryVO> {
+public class LovController extends BaseController {
 
     @Autowired
     private LovService lovService;

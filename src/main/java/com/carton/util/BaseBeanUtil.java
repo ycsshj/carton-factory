@@ -20,6 +20,10 @@ import java.util.List;
  ************************************************************/
 public class BaseBeanUtil {
 
+    public static String objectToString(Object obj) {
+        return obj == null ? null : String.valueOf(obj);
+    }
+
     public static List<CartonCategoryVO> convertCartonCategoryList2VOs(List<CartonCategory> cartonCategoryList) {
         List<CartonCategoryVO> cartonCategoryVOS = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(cartonCategoryList)) {

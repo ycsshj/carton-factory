@@ -1,13 +1,25 @@
 <!DOCTYPE html>
+<!--suppress ThymeleafVariablesResolveInspection -->
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<form role="form" th:action="@{/cartonStock/addCartonStock}" id="addCartonCategoryForm" class="form-horizontal" method="post">
+<form role="form" th:action="@{/cartonStock/addCartonStock}" id="addCartonStockForm" class="form-horizontal" method="post">
     <div class="form-group">
         <label class="col-md-2 control-label">纸箱规格: </label>
-        <div class="col-md-4">
-            <select class="form-control" name="cartonCategory" id="cartonCategory">
+        <div class="col-md-6">
+            <select class="form-control" name="cartonCategoryId" id="cartonCategoryId">
+                <option>请选择...</option>
+                <option th:each="cartonCategory:${cartonCategoryList}" th:value="${cartonCategory.id}"
+                        th:text="${cartonCategory.simpleName}"></option>
             </select>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="stockLeft">库存名称: </label>
+        <div class="col-sm-4">
+            <input type="text" id="name" name="name" class="form-control" required="true"/>
         </div>
 
         <label class="col-sm-2 control-label" for="stock">总库存: </label>

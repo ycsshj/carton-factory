@@ -3,49 +3,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<form role="form" th:action="@{/cartonStock/editCartonStock}" id="editCartonCategoryForm" class="form-horizontal" method="post">
+<form role="form" th:action="@{/cartonStock/editCartonStock}" id="editCartonStockForm" class="form-horizontal" method="post">
     <input type="hidden" name="id" th:value="${cartonStock.id}"/>
 
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="cartonBigType">纸箱大类: </label>
-        <div class="col-sm-4">
-            <select class="form-control" name="cartonBigType" id="cartonBigType" onchange="cartonBigTypeChange(this.value);" required="true">
-                <option th:each="bigCategoryLov:${bigCategoryLovList}" th:value="${bigCategoryLov.lovCode}"
-                        th:text="${bigCategoryLov.lovValue}" th:selected="${bigCategoryLov.lovCode eq cartonCategory.cartonBigType}"></option>
-            </select>
-        </div>
-
-        <label class="col-sm-2 control-label" for="cartonSmallType">纸箱小类: </label>
-        <div class="col-sm-4">
-            <select class="form-control" name="cartonSmallType" id="cartonSmallType" required="true">
-                <option th:each="smallCategoryLov:${smallCategoryLovList}" th:value="${smallCategoryLov.lovCode}"
-                        th:text="${smallCategoryLov.lovValue}" th:selected="${smallCategoryLov.lovCode eq cartonCategory.cartonSmallType}"></option>
+        <label class="col-md-2 control-label">纸箱规格: </label>
+        <div class="col-md-6">
+            <select class="form-control" name="cartonCategoryId" id="cartonCategoryId">
+                <option>请选择...</option>
+                <option th:each="cartonCategory:${cartonCategoryList}" th:value="${cartonCategory.id}"
+                        th:text="${cartonCategory.simpleName}" th:selected="${cartonStock.cartonCategoryId eq cartonCategory.id}"></option>
             </select>
         </div>
     </div>
 
     <div class="form-group">
+        <label class="col-sm-2 control-label" for="stockLeft">库存名称: </label>
+        <div class="col-sm-4">
+            <input type="text" id="name" name="name" class="form-control" required="true" th:value="${cartonStock.name}"/>
+        </div>
+
         <label class="col-sm-2 control-label" for="stock">总库存: </label>
         <div class="col-sm-4">
-            <input type="number" id="stock" name="stock" class="form-control"
-                   required="true" th:value="${cartonCategory.stock}"/>
-        </div>
-
-        <label class="col-sm-2 control-label" for="stockLeft">剩余库存: </label>
-        <div class="col-sm-4">
-            <input type="number" id="stockLeft" name="stockLeft" class="form-control"
-                   required="true" th:value="${cartonCategory.stockLeft}"/>
+            <input type="number" id="stock" name="stock" class="form-control" required="true" th:value="${cartonStock.stock}"/>
         </div>
     </div>
 
     <div class="form-group">
+        <label class="col-sm-2 control-label" for="stockLeft">剩余库存: </label>
+        <div class="col-sm-4">
+            <input type="number" id="stockLeft" name="stockLeft" class="form-control" required="true" th:value="${cartonStock.stockLeft}"/>
+        </div>
+
         <label class="col-sm-2 control-label" for="costPrice">成本单价: </label>
         <div class="col-sm-4">
-            <input type="number" id="costPrice" name="costPrice" class="form-control"
-                   required="true" th:value="${cartonCategory.costPrice}"/>
+            <input type="number" id="costPrice" name="costPrice" class="form-control" required="true" th:value="${cartonStock.costPrice}"/>
         </div>
     </div>
-
 
 </form>
 </body>

@@ -5,7 +5,7 @@
 
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="carton_category_id" property="cartonCategoryId" jdbcType="VARCHAR" />
+    <result column="carton_category_id" property="cartonCategoryId" jdbcType="INTEGER" />
     <result column="stock" property="stock" jdbcType="INTEGER" />
     <result column="stock_left" property="stockLeft" jdbcType="INTEGER" />
     <result column="cost_price" property="costPrice" jdbcType="DOUBLE" />
@@ -15,7 +15,7 @@
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
 
-    <association property="cartonCategory" javaType="com.carton.model.CartonCategory">
+    <!--<association property="cartonCategory" javaType="com.carton.model.CartonCategory">
       <id column="carton_category_id" property="id" jdbcType="INTEGER" />
       <result column="carton_big_type" property="cartonBigType" jdbcType="VARCHAR" />
       <result column="cartonBigValue" property="cartonBigValue" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
       <result column="cartonSmallValue" property="cartonSmallValue" jdbcType="VARCHAR" />
       <result column="carton_standard" property="cartonStandard" jdbcType="VARCHAR" />
       <result column="critical_standard" property="criticalStandard" jdbcType="VARCHAR" />
-    </association>
+    </association>-->
 
   </resultMap>
   <sql id="Example_Where_Clause" >

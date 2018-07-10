@@ -2,6 +2,7 @@ package com.carton.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.carton.mapper.CartonStockMapper;
+import com.carton.model.CartonCategoryExample;
 import com.carton.model.CartonStock;
 import com.carton.model.CartonStockExample;
 import com.carton.service.CartonStockService;
@@ -10,8 +11,10 @@ import com.carton.util.BaseBeanUtil;
 import com.carton.util.LogExceptionStackTrace;
 import com.carton.vo.CartonStockVO;
 import com.carton.vo.base.Result;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -37,21 +40,38 @@ public class CartonStockServiceImpl implements CartonStockService {
     private CartonStockMapper cartonStockMapper;
 
     @Override
-    public PageInfo<CartonStockVO> getCartonStockList(Integer pageNum, Integer pageSize, Map<String, Object> params) {
+    public PageInfo<CartonStock> getCartonStockList(Integer pageNum, Integer pageSize, Map<String, Object> params) {
         try {
             logger.info(String.format("Retrieve CartonStockList by [pageNum = %s, pageSize = %s, params = %s]", pageNum, pageSize, JSON.toJSONString(params)));
+
             PageHelper.startPage(pageNum, pageSize);
+            List<CartonStock> cartonStockList = cartonStockMapper.selectByExample(handlerQueryParams(params));
 
-            CartonStockExample query = new CartonStockExample();
-            List<CartonStock> cartonStockList = cartonStockMapper.selectByExample(query);
-            logger.info(String.format("CartonCategoryList is: %s", JSON.toJSONString(cartonStockList)));
+            logger.info(String.format("CartonStockList is: %s", JSON.toJSONString(cartonStockList)));
 
-            return new PageInfo<>(BaseBeanUtil.convertCartonStockList2VOs(cartonStockList));
-
+            return new PageInfo<>(cartonStockList);
         } catch (Exception e) {
             logger.error("exception: {}" + LogExceptionStackTrace.errorStackTrace(e));
             return new PageInfo<>();
         }
+    }
+
+    private CartonStockExample handlerQueryParams(Map<String, Object> params) {
+        CartonStockExample query = new CartonStockExample();
+        CartonStockExample.Criteria criteria = query.createCriteria();
+
+        if (params != null) {
+            String cartonCategoryParam = BaseBeanUtil.objectToString(params.get("cartonCategoryParam"));
+            if (StringUtils.isNotBlank(cartonCategoryParam)) {
+                criteria.andCartonCategoryIdEqualTo(cartonCategoryParam);
+            }
+            String nameParam = BaseBeanUtil.objectToString(params.get("nameParam"));
+            if (StringUtils.isNotBlank(nameParam)) {
+                criteria.andNameLike(nameParam);
+            }
+        }
+
+        return query;
     }
 
     @Override

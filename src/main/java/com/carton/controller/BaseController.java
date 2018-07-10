@@ -22,7 +22,7 @@ import java.util.Map;
  * @date 2017-10-02 22:00
  ************************************************************/
 
-public class BaseController<T> {
+public class BaseController {
 
     @Autowired
     protected ObjectMapper objectMapper;
@@ -49,7 +49,7 @@ public class BaseController<T> {
         return objectMapper.writeValueAsString(json);
     }
 
-    protected void setPageInfo2Model(Model model, PageInfo<T> pageInfo) {
+    protected void setPageInfo2Model(Model model, PageInfo pageInfo) {
         //获得当前页
         model.addAttribute("pageNum", pageInfo.getPageNum());
         //获得一页显示的条数

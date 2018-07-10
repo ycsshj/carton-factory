@@ -32,7 +32,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/cartonCategory")
-public class CartonCategoryController extends BaseController<CartonCategoryVO> {
+public class CartonCategoryController extends BaseController {
 
     @Autowired
     private CartonCategoryService cartonCategoryService;
@@ -47,8 +47,11 @@ public class CartonCategoryController extends BaseController<CartonCategoryVO> {
                                         @RequestParam(required = false) String bigCategoryParam,
                                         @RequestParam(required = false) String smallCategoryParam) {
         Map<String, Object> params = new HashMap<>();
-        PageInfo<CartonCategoryVO> pageInfo = cartonCategoryService.getCartonCategoryList(pageNum, pageSize, params);
-        model.addAttribute("cartonCategoryList", pageInfo.getList());
+        params.put("bigCategoryParam", bigCategoryParam);
+        params.put("smallCategoryParam", smallCategoryParam);
+
+        PageInfo<CartonCategory> pageInfo = cartonCategoryService.getCartonCategoryList(pageNum, pageSize, params);
+        model.addAttribute("cartonCategoryList", BaseBeanUtil.convertCartonCategoryList2VOs(pageInfo.getList()));
         setPageInfo2Model(model, pageInfo);
 
         //lov下拉框
@@ -108,18 +111,8 @@ public class CartonCategoryController extends BaseController<CartonCategoryVO> {
     @ResponseBody
     @RequestMapping(value = "/getSimpleCartonCategoryList", method = RequestMethod.GET)
     public Result getSimpleCartonCategoryList() {
-        PageInfo<CartonCategoryVO> pageInfo = cartonCategoryService.getCartonCategoryList(1, 9999, null);
-        List<CartonCategoryVO> categoryVOList = pageInfo.getList();
-        List<Map<String, Object>> categoryList = new ArrayList<>();
-        if (CollectionUtils.isNotEmpty(categoryVOList)) {
-            for (CartonCategoryVO cartonCategoryVO : categoryVOList) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("id", cartonCategoryVO.getId());
-                map.put("simpleName", cartonCategoryVO.getCartonBigTypeValue() + " " + cartonCategoryVO.getCartonSmallTypeValue()
-                        + " 长:" + cartonCategoryVO.getCartonLength() + " 宽:" + cartonCategoryVO.getCartonWidth() + " 高:" + cartonCategoryVO.getCartonHeight());
-                categoryList.add(map);
-            }
-        }
+
+        List<Map<String, Object>> categoryList = cartonCategoryService.getSimpleCartonCategoryList();
 
         Result result = new Result();
         result.setData(categoryList);

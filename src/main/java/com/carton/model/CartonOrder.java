@@ -8,7 +8,7 @@ public class CartonOrder extends BaseEntity {
 
     private Integer id;
 
-    private String cartonStockId;
+    private Integer cartonStockId;
 
     private Integer amount;
 
@@ -26,12 +26,12 @@ public class CartonOrder extends BaseEntity {
         this.id = id;
     }
 
-    public String getCartonStockId() {
+    public Integer getCartonStockId() {
         return cartonStockId;
     }
 
-    public void setCartonStockId(String cartonStockId) {
-        this.cartonStockId = cartonStockId == null ? null : cartonStockId.trim();
+    public void setCartonStockId(Integer cartonStockId) {
+        this.cartonStockId = cartonStockId;
     }
 
     public Integer getAmount() {

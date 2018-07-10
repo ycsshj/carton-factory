@@ -17,18 +17,21 @@
         <form method="get" th:action="@{/cartonStock/cartonStockList}" id="searchForm">
             <input type="hidden" name="pageNum" id="pageNum" th:value="${pageNum}"/>
             <input type="hidden" name="pageSize" id="pageSize" th:value="${pageSize}"/>
+
             <div class="row form-horizontal">
                 <div class="form-group">
                     <label class="col-md-1 control-label">纸箱规格: </label>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <select class="form-control" name="cartonCategoryParam" id="cartonCategoryParam">
-                            <option>请选择...</option>
+                            <option value="">请选择...</option>
+                            <option th:each="cartonCategory:${cartonCategoryList}" th:value="${cartonCategory.id}"
+                                    th:text="${cartonCategory.simpleName}" th:selected="${cartonCategory.id eq cartonCategoryParam}"></option>
                         </select>
                     </div>
 
                     <label class="col-md-1 control-label">库存名称: </label>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" name="stockNameParam" id="stockNameParam" placeholder="请输入库存名称"/>
+                        <input type="text" class="form-control" name="nameParam" id="nameParam" placeholder="请输入库存名称" th:value="${nameParam}"/>
                     </div>
 
                 </div>
@@ -46,8 +49,7 @@
                 <tr>
                     <th width="3%"><input type="checkbox" id="checkAll" onclick="checkAll()"/></th>
                     <th>库存名称</th>
-                    <th>纸箱大类</th>
-                    <th>纸箱小类</th>
+                    <th>纸箱规格</th>
                     <th>总库存</th>
                     <th>剩余库存</th>
                     <th>成本单价</th>
@@ -59,8 +61,8 @@
                         <input type="checkbox" name="choseElement" th:value="${cartonStock.id}" onclick="clickElement(this)"/>
                     </td>
                     <td th:text="${cartonStock.name}">name</td>
-                    <td th:text="${cartonStock.CartonStock.cartonBigTypeValue}">cartonBigTypeValue</td>
-                    <td th:text="${cartonStock.CartonStock.cartonSmallTypeValue}">cartonSmallTypeValue</td>
+                    <td th:each="cartonCategory:${cartonCategoryList}" th:if="${cartonCategory.id eq cartonStock.cartonCategoryId}"
+                        th:text="${cartonCategory.simpleName}">simpleName</td>
                     <td th:text="${cartonStock.stock}">stock</td>
                     <td th:text="${cartonStock.stockLeft}">stockLeft</td>
                     <td th:text="${cartonStock.costPrice}">costPrice</td>

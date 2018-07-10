@@ -22,7 +22,7 @@
                     <label class="col-md-1 control-label">纸箱大类: </label>
                     <div class="col-md-2">
                         <select class="form-control" name="bigCategoryParam" id="bigCategoryParam" onchange="cartonBigTypeChange(this.value);">
-                            <option>请选择...</option>
+                            <option value="">请选择...</option>
                             <option th:each="bigCategoryLov:${bigCategoryLovList}" th:value="${bigCategoryLov.lovCode}"
                                     th:text="${bigCategoryLov.lovValue}" th:selected="${bigCategoryLov.lovCode eq bigCategoryParam}"></option>
                         </select>
@@ -31,7 +31,7 @@
                     <label class="col-md-1 control-label">纸箱小类: </label>
                     <div class="col-md-2">
                         <select class="form-control" name="smallCategoryParam" id="smallCategoryParam">
-                            <option>请选择...</option>
+                            <option value="">请选择...</option>
                             <option th:each="smallCategoryLov:${smallCategoryLovList}" th:value="${smallCategoryLov.lovCode}"
                                     th:text="${smallCategoryLov.lovValue}" th:selected="${smallCategoryLov.lovCode eq smallCategoryParam}"></option>
                         </select>

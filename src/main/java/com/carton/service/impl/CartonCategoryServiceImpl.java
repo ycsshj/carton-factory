@@ -12,15 +12,15 @@ import com.carton.vo.CartonCategoryVO;
 import com.carton.vo.base.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /************************************************************
  * @Description:
@@ -37,22 +37,39 @@ public class CartonCategoryServiceImpl implements CartonCategoryService {
     private CartonCategoryMapper cartonCategoryMapper;
 
     @Override
-    public PageInfo<CartonCategoryVO> getCartonCategoryList(Integer pageNum, Integer pageSize, Map<String, Object> params) {
+    public PageInfo<CartonCategory> getCartonCategoryList(Integer pageNum, Integer pageSize, Map<String, Object> params) {
 
         try {
             logger.info(String.format("Retrieve CartonCategoryList by [pageNum = %s, pageSize = %s, params = %s]", pageNum, pageSize, JSON.toJSONString(params)));
             PageHelper.startPage(pageNum, pageSize);
+            List<CartonCategory> cartonCategoryList = cartonCategoryMapper.selectByExample(handlerQueryParams(params));
 
-            CartonCategoryExample query = new CartonCategoryExample();
-            List<CartonCategory> cartonCategoryList = cartonCategoryMapper.selectByExample(query);
             logger.info(String.format("CartonCategoryList is: %s", JSON.toJSONString(cartonCategoryList)));
 
-            return new PageInfo<>(BaseBeanUtil.convertCartonCategoryList2VOs(cartonCategoryList));
+            return new PageInfo<>(cartonCategoryList);
 
         } catch (Exception e) {
             logger.error("exception: {}" + LogExceptionStackTrace.errorStackTrace(e));
             return new PageInfo<>();
         }
+    }
+
+    private CartonCategoryExample handlerQueryParams(Map<String, Object> params) {
+        CartonCategoryExample query = new CartonCategoryExample();
+        CartonCategoryExample.Criteria criteria = query.createCriteria();
+
+        if (params != null) {
+            String bigCategoryParam = BaseBeanUtil.objectToString(params.get("bigCategoryParam"));
+            if (StringUtils.isNotBlank(bigCategoryParam)) {
+                criteria.andCartonBigTypeEqualTo(bigCategoryParam);
+            }
+            String smallCategoryParam = BaseBeanUtil.objectToString(params.get("smallCategoryParam"));
+            if (StringUtils.isNotBlank(smallCategoryParam)) {
+                criteria.andCartonSmallTypeEqualTo(smallCategoryParam);
+            }
+        }
+
+        return query;
     }
 
     @Override
@@ -99,6 +116,24 @@ public class CartonCategoryServiceImpl implements CartonCategoryService {
             logger.error("exception: {}" + LogExceptionStackTrace.errorStackTrace(e));
             return ApiHelper.getFailResult();
         }
+    }
+
+    @Override
+    public List<Map<String, Object>> getSimpleCartonCategoryList() {
+        PageInfo<CartonCategory> pageInfo = getCartonCategoryList(1, 9999, null);
+        List<CartonCategory> categoryVOList = pageInfo.getList();
+        List<Map<String, Object>> categoryList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(categoryVOList)) {
+            for (CartonCategory cartonCategory : categoryVOList) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", cartonCategory.getId());
+                map.put("simpleName", cartonCategory.getCartonBigTypeValue() + " " + cartonCategory.getCartonSmallTypeValue()
+                        + " 长:" + cartonCategory.getCartonLength() + " 宽:" + cartonCategory.getCartonWidth() + " 高:" + cartonCategory.getCartonHeight());
+                categoryList.add(map);
+            }
+        }
+
+        return categoryList;
     }
 
 }

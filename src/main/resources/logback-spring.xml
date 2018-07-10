@@ -13,9 +13,9 @@
         <file>${LOG_PATH:-/usr/local/tomcat/logs/}/${LOG_FILE:-carton.log}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${LOG_FILE}-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <fileNamePattern>${LOG_PATH:-/usr/local/tomcat/logs/}/${LOG_FILE}-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
             <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 50GB -->
-            <maxFileSize>100MB</maxFileSize>
+            <maxFileSize>5KB</maxFileSize>
             <maxHistory>60</maxHistory>
             <totalSizeCap>50GB</totalSizeCap>
         </rollingPolicy>
@@ -24,7 +24,7 @@
         </encoder>
     </appender>
 
-    <springProfile name="dev">
+    <!--<springProfile name="dev">
         <root level="info">
             <appender-ref ref="STDOUT"/>
         </root>
@@ -33,15 +33,23 @@
     <springProfile name="pretest,test">
         <root level="info">
             <appender-ref ref="STDOUT"/>
-            <!--<appender-ref ref="ROLLING"/>-->
+            &lt;!&ndash;<appender-ref ref="ROLLING"/>&ndash;&gt;
         </root>
     </springProfile>
 
     <springProfile name="prod">
         <root level="warn">
             <appender-ref ref="STDOUT"/>
-            <!--<appender-ref ref="ROLLING"/>-->
+            &lt;!&ndash;<appender-ref ref="ROLLING"/>&ndash;&gt;
         </root>
-    </springProfile>
+    </springProfile>-->
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <logger name="com.carton" level="DEBUG">
+        <appender-ref ref="ROLLING"/>
+    </logger>
 
 </configuration>

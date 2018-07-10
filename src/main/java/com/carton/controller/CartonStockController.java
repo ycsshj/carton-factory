@@ -1,6 +1,7 @@
 package com.carton.controller;
 
 import com.carton.model.CartonStock;
+import com.carton.service.CartonCategoryService;
 import com.carton.service.CartonStockService;
 import com.carton.service.LovService;
 import com.carton.util.BaseBeanUtil;
@@ -30,47 +31,43 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/cartonStock")
-public class CartonStockController extends BaseController<CartonStockVO> {
+public class CartonStockController extends BaseController {
 
     @Autowired
     private CartonStockService cartonStockService;
 
     @Autowired
-    private LovService lovService;
+    private CartonCategoryService cartonCategoryService;
 
     @RequestMapping("/cartonStockList")
     public String getCartonStockList(Model model,
                                      @RequestParam(defaultValue = "1") Integer pageNum,
                                      @RequestParam(defaultValue = "5") Integer pageSize,
-                                     @RequestParam(required = false) String bigCategoryParam,
-                                     @RequestParam(required = false) String smallCategoryParam,
-                                     @RequestParam(required = false) String name) {
+                                     @RequestParam(required = false) Integer cartonCategoryParam,
+                                     @RequestParam(required = false) String nameParam) {
         Map<String, Object> params = new HashMap<>();
-        PageInfo<CartonStockVO> pageInfo = cartonStockService.getCartonStockList(pageNum, pageSize, params);
-        model.addAttribute("cartonStockList", pageInfo.getList());
+        params.put("cartonCategoryParam", cartonCategoryParam);
+        params.put("nameParam", nameParam);
+
+        PageInfo<CartonStock> pageInfo = cartonStockService.getCartonStockList(pageNum, pageSize, params);
+        model.addAttribute("cartonStockList", BaseBeanUtil.convertCartonStockList2VOs(pageInfo.getList()));
         setPageInfo2Model(model, pageInfo);
 
-        //lov下拉框
-        List<LovVO> bigCategoryLovList = lovService.getLovByCondition(Context.CARTON_CATEGORY, null, null);
-        model.addAttribute("bigCategoryLovList", bigCategoryLovList);
-        if (StringUtils.isNotBlank(bigCategoryParam)) {
-            List<LovVO> smallCategoryLovList = lovService.getLovByCondition(Context.CARTON_CATEGORY, bigCategoryParam, null);
-            model.addAttribute("smallCategoryLovList", smallCategoryLovList);
-        }
+        List<Map<String, Object>> categoryList = cartonCategoryService.getSimpleCartonCategoryList();
+        model.addAttribute("cartonCategoryList", categoryList);
 
         //回显表单自定义搜索项
-        model.addAttribute("bigCategoryParam", bigCategoryParam == null ? "" : bigCategoryParam);
-        model.addAttribute("smallCategoryParam", smallCategoryParam == null ? "" : smallCategoryParam);
-        model.addAttribute("name", name == null ? "" : name);
+        model.addAttribute("cartonCategoryParam", cartonCategoryParam == null ? "" : cartonCategoryParam);
+        model.addAttribute("nameParam", nameParam == null ? "" : nameParam);
 
         return "carton/carton_stock_list";
     }
 
     @RequestMapping(value = "/toAddPage", method = RequestMethod.GET)
     public String toAddPage(Model model) {
-        //lov下拉框
-        List<LovVO> bigCategoryLovList = lovService.getLovByCondition(Context.CARTON_CATEGORY, null, null);
-        model.addAttribute("bigCategoryLovList", bigCategoryLovList);
+
+        List<Map<String, Object>> categoryList = cartonCategoryService.getSimpleCartonCategoryList();
+        model.addAttribute("cartonCategoryList", categoryList);
 
         return "carton/carton_stock_add";
     }
@@ -82,11 +79,8 @@ public class CartonStockController extends BaseController<CartonStockVO> {
         CartonStockVO cartonStockVO = BaseBeanUtil.convertCartonStock2VO(cartonStock);
         model.addAttribute("cartonStock", cartonStockVO);
 
-        //lov下拉框
-        List<LovVO> bigCategoryLovList = lovService.getLovByCondition(Context.CARTON_CATEGORY, null, null);
-        model.addAttribute("bigCategoryLovList", bigCategoryLovList);
-        List<LovVO> smallCategoryLovList = lovService.getLovByCondition(Context.CARTON_CATEGORY, cartonStock.getCartonCategory().getCartonSmallType(), null);
-        model.addAttribute("smallCategoryLovList", smallCategoryLovList);
+        List<Map<String, Object>> categoryList = cartonCategoryService.getSimpleCartonCategoryList();
+        model.addAttribute("cartonCategoryList", categoryList);
 
         return "carton/carton_stock_edit";
     }

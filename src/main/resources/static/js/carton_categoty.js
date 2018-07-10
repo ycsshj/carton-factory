@@ -9,8 +9,8 @@ function cartonBigTypeChange(value) {
         contentType: "application/json;charset=utf-8",
         success: function (data) {
             if (data != null && data != undefined) {
-                $("#smallCategoryParam").append("<option>请选择...</option>");
-                $("#cartonSmallType").append("<option>请选择...</option>");
+                $("#smallCategoryParam").append("<option value=''>请选择...</option>");
+                $("#cartonSmallType").append("<option value=''>请选择...</option>");
                 for (var i = 0; i < data.length; i++) {
                     $("#smallCategoryParam").append("<option value='" + data[i]["lovCode"] + "'>" + data[i]["lovValue"] + "</option>");
                     $("#cartonSmallType").append("<option value='" + data[i]["lovCode"] + "'>" + data[i]["lovValue"] + "</option>");
@@ -95,13 +95,3 @@ function toEditPage(id) {
         $("#editCartonCategoryBody").html(data);
     })
 }
-
-
-
-
-
-
-
-
-
-

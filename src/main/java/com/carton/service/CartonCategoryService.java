@@ -5,6 +5,7 @@ import com.carton.vo.CartonCategoryVO;
 import com.carton.vo.base.Result;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /************************************************************
@@ -14,11 +15,13 @@ import java.util.Map;
  ************************************************************/
 
 public interface CartonCategoryService {
-    PageInfo<CartonCategoryVO> getCartonCategoryList(Integer pageNum, Integer pageSize, Map<String, Object> params);
+    PageInfo<CartonCategory> getCartonCategoryList(Integer pageNum, Integer pageSize, Map<String, Object> params);
 
     Result addCartonCategory(CartonCategory cartonCategory);
 
     CartonCategory getCartonCategoryDetail(Integer id);
 
     Result editCartonCategory(CartonCategory cartonCategory);
+
+    List<Map<String,Object>> getSimpleCartonCategoryList();
 }

@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `carton_stock`;
 CREATE TABLE `carton_stock` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) NOT NULL	COMMENT '库存名称',
-	`carton_category_id` varchar(255) NOT NULL	COMMENT '纸箱种类主键',
+	`carton_category_id` int(11) NOT NULL	COMMENT '纸箱种类主键',
 	`stock` int(11) DEFAULT 0 COMMENT '总库存数',
 	`stock_left` int(11) DEFAULT 0 COMMENT '剩余库存数',
 	`cost_price` DOUBLE(10,3) DEFAULT 0 COMMENT '成本单价',

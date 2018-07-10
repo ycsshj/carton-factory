@@ -8,7 +8,7 @@ public class CartonStock extends BaseEntity {
 
     private String name;
 
-    private String cartonCategoryId;
+    private Integer cartonCategoryId;
 
     private Integer stock;
 
@@ -34,12 +34,12 @@ public class CartonStock extends BaseEntity {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getCartonCategoryId() {
+    public Integer getCartonCategoryId() {
         return cartonCategoryId;
     }
 
-    public void setCartonCategoryId(String cartonCategoryId) {
-        this.cartonCategoryId = cartonCategoryId == null ? null : cartonCategoryId.trim();
+    public void setCartonCategoryId(Integer cartonCategoryId) {
+        this.cartonCategoryId = cartonCategoryId;
     }
 
     public Integer getStock() {
