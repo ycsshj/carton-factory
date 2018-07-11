@@ -1,8 +1,9 @@
 <!doctype html>
+<!--suppress ThymeleafVariablesResolveInspection -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
-    <title>纸箱管理系统</title>
+    <title>启硕管理系统</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content=""/>
@@ -27,7 +28,7 @@
 
     <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-            <a class="" href="#"><span class="navbar-brand"><span class="fa fa-paper-plane"></span> 纸箱管理系统</span></a>
+            <a class="" href="#"><span class="navbar-brand"><span class="fa fa-paper-plane"></span> 启硕管理系统</span></a>
         </div>
         <div class="navbar-collapse collapse" style="height: 1px;">
         </div>
@@ -38,17 +39,21 @@
             <p class="panel-heading no-collapse">登录</p>
             <div class="panel-body">
                 <form th:action="@{/doLogin}" method="post">
+                    <div class="form-group" th:if="${message != null}">
+                        <label style="font-weight: bold;color: #2b542c" th:text="${message}"></label>
+                    </div>
+
                     <div class="form-group">
                         <label>用户名</label>
-                        <input type="text" name="userName" th:name="userName" class="form-control span12"/>
+                        <input type="text" name="userName" th:name="userName" th:value="${userName}" class="form-control span12"/>
                     </div>
                     <div class="form-group">
                         <label>密码</label>
-                        <input type="password" name="passWord" th:name="passWord" class="form-control span12"/>
+                        <input type="password" name="passWord" th:name="passWord" th:value="${passWord}" class="form-control span12"/>
                     </div>
                     <input type="submit" class="btn btn-primary pull-right" value="登录"/>
                     <label class="remember-me">
-                        <input type="checkbox" name="remember" th:name="remember"/> 记住我
+                        <input type="checkbox" name="remember" th:name="remember" th:checked="${remember}"/> 记住我
                     </label>
                     <div class="clearfix"></div>
                 </form>

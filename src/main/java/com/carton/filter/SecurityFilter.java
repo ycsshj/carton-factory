@@ -1,9 +1,8 @@
 package com.carton.filter;
 
-import com.carton.util.Config;
-import com.carton.util.Context;
-import com.carton.util.CookieUtil;
-import com.carton.util.StringPool;
+import com.alibaba.fastjson.JSON;
+import com.carton.model.User;
+import com.carton.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,18 +44,38 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Cookie cookie = CookieUtil.getCookieByName(request, Context.USER_INFO);
+        if (doValidate(request)) {
+            filterChain.doFilter(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/login");
+        }
+    }
+
+    private boolean doValidate(HttpServletRequest request) {
+        boolean flag = false;
         boolean needFilter = needFilter(request.getRequestURI());
         if (needFilter) {
-            if (cookie == null || cookie.getValue() == null) {
-                response.sendRedirect(request.getContextPath() + "/login");
+
+            Object userString = request.getSession().getAttribute(Context.USER_INFO);
+            User user = JSON.parseObject(String.valueOf(userString), User.class);
+            if (user == null) {
+                Cookie recordCookie = CookieUtil.getCookieByName(request, Context.USER_INFO);
+                if (recordCookie != null && StringUtils.isNotBlank(recordCookie.getValue())) {
+                    String decrypt = AESUtil.decrypt(recordCookie.getValue(), Context.AES_KEY);
+                    user = JSON.parseObject(decrypt, User.class);
+
+                    if (user != null) {
+                        flag = true;
+                    }
+                }
             }else {
-                filterChain.doFilter(request, response);
+                flag = true;
             }
-        }else {
-            filterChain.doFilter(request, response);
+        } else {
+            flag = true;
         }
 
+        return flag;
     }
 
     protected boolean needFilter(String uri) {

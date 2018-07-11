@@ -28,7 +28,7 @@ public class CustomServletContainer implements EmbeddedServletContainerCustomize
         //container.setContextPath("/baoli");
 
         //设置session失效时间
-        //container.setSessionTimeout(30);
+        container.setSessionTimeout(30);
 
         //...
     }

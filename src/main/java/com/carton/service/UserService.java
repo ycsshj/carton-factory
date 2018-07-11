@@ -1,5 +1,7 @@
 package com.carton.service;
 
+import com.carton.model.User;
+
 /************************************************************
  * @Description:
  * @Author: zhengrui
@@ -7,4 +9,5 @@ package com.carton.service;
  ************************************************************/
 
 public interface UserService {
+    User validateUser(String userName, String passWord);
 }
