@@ -6,6 +6,7 @@ import com.carton.service.UserService;
 import com.carton.util.AESUtil;
 import com.carton.util.Context;
 import com.carton.util.CookieUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +31,26 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String toLoginPage(HttpServletRequest request, Model model) {
-        Cookie recordCookie = CookieUtil.getCookieByName(request, Context.USER_INFO);
+
+        Object userString = request.getSession().getAttribute(Context.USER_INFO);
+        User user = JSON.parseObject(String.valueOf(userString), User.class);
+        if (user == null) {
+            Cookie recordCookie = CookieUtil.getCookieByName(request, Context.USER_INFO);
+            if (recordCookie != null && StringUtils.isNotBlank(recordCookie.getValue())) {
+                String decrypt = AESUtil.decrypt(recordCookie.getValue(), Context.AES_KEY);
+                user = JSON.parseObject(decrypt, User.class);
+
+                if (user != null) {
+                    request.getSession().setAttribute(Context.USER_INFO, JSON.toJSONString(user));
+                    request.getSession().setAttribute(Context.USER_NAME, user.getUserName());
+                    return "redirect:/home";
+                }
+            }
+        }else {
+            return "redirect:/home";
+        }
+
+        /*Cookie recordCookie = CookieUtil.getCookieByName(request, Context.USER_INFO);
         if (recordCookie != null) {
             String decrypt = AESUtil.decrypt(recordCookie.getValue(), Context.AES_KEY);
             User user = JSON.parseObject(decrypt, User.class);
@@ -38,7 +58,7 @@ public class LoginController {
             model.addAttribute("userName", user.getUserName());
             model.addAttribute("passWord", AESUtil.decrypt(user.getPassword(), Context.AES_KEY));
             model.addAttribute("remember", true);
-        }
+        }*/
 
         return "login/sign-in";
     }
@@ -81,7 +101,7 @@ public class LoginController {
         killUserCookie.setPath("/");
         response.addCookie(killUserCookie);
 
-        return "redirect:login";
+        return "redirect:/login";
     }
 
 }
