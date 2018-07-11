@@ -1,8 +1,10 @@
 package com.carton.util;
 
+import com.carton.model.Account;
 import com.carton.model.CartonCategory;
 import com.carton.model.CartonStock;
 import com.carton.model.Lov;
+import com.carton.vo.AccountVO;
 import com.carton.vo.CartonCategoryVO;
 import com.carton.vo.CartonStockVO;
 import com.carton.vo.LovVO;
@@ -102,5 +104,29 @@ public class BaseBeanUtil {
             BeanUtils.copyProperties(cartonStockVO, cartonStock);
         }
         return cartonStock;
+    }
+
+    public static AccountVO convertAccount2VO(Account account) {
+        AccountVO accountVO = new AccountVO();
+        if (account != null) {
+            BeanUtils.copyProperties(account, accountVO);
+        }
+        return accountVO;
+    }
+
+    public static List<AccountVO> convertAccountList2VOs(List<Account> accountList) {
+        List<AccountVO> accountVOS = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(accountList)) {
+            accountList.forEach(item -> accountVOS.add(convertAccount2VO(item)));
+        }
+        return accountVOS;
+    }
+
+    public static Account convertAccountVO2Entity(AccountVO accountVO) {
+        Account account = new Account();
+        if (accountVO != null) {
+            BeanUtils.copyProperties(accountVO, account);
+        }
+        return account;
     }
 }

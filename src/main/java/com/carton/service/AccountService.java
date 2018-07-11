@@ -1,5 +1,11 @@
 package com.carton.service;
 
+import com.carton.model.Account;
+import com.carton.vo.base.Result;
+import com.github.pagehelper.PageInfo;
+
+import java.util.Map;
+
 /************************************************************
  * @Description:
  * @Author: zhengrui
@@ -7,4 +13,11 @@ package com.carton.service;
  ************************************************************/
 
 public interface AccountService {
+    PageInfo<Account> getAccountList(Integer pageNum, Integer pageSize, Map<String, Object> params);
+
+    Account getAccountById(Integer id);
+
+    Result addAccount(Account account);
+
+    Result editAccount(Account account);
 }

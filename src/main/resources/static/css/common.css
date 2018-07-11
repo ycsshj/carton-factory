@@ -10,3 +10,13 @@ img{
 img:hover{
     transform: scale(5);
 }
+
+table{
+    table-layout:fixed;
+}
+
+table tbody tr td{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
