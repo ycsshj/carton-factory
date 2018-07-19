@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
  * @Date 2018-06-23 20:56
  ************************************************************/
 
+@Transactional
 @Service
 public class LovServiceImpl implements LovService {
     private static final Logger logger = LoggerFactory.getLogger(LovServiceImpl.class);

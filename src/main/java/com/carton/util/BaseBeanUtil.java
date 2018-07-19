@@ -1,16 +1,9 @@
 package com.carton.util;
 
-import com.carton.model.Account;
-import com.carton.model.CartonCategory;
-import com.carton.model.CartonStock;
-import com.carton.model.Lov;
-import com.carton.vo.AccountVO;
-import com.carton.vo.CartonCategoryVO;
-import com.carton.vo.CartonStockVO;
-import com.carton.vo.LovVO;
+import com.carton.model.*;
+import com.carton.vo.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,5 +121,29 @@ public class BaseBeanUtil {
             BeanUtils.copyProperties(accountVO, account);
         }
         return account;
+    }
+
+    public static List<CartonOrderVO> convertCartonOrderList2VOs(List<CartonOrder> cartonOrders) {
+        List<CartonOrderVO> cartonOrderVOS = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(cartonOrders)) {
+            cartonOrders.forEach(item -> cartonOrderVOS.add(convertCartonOrder2VO(item)));
+        }
+        return cartonOrderVOS;
+    }
+
+    public static CartonOrderVO convertCartonOrder2VO(CartonOrder cartonOrder) {
+        CartonOrderVO cartonOrderVO = new CartonOrderVO();
+        if (cartonOrder != null) {
+            BeanUtils.copyProperties(cartonOrder, cartonOrderVO);
+        }
+        return cartonOrderVO;
+    }
+
+    public static CartonOrder convertCartonOrderVO2Entity(CartonOrderVO cartonOrderVO) {
+        CartonOrder cartonOrder = new CartonOrder();
+        if (cartonOrderVO != null) {
+            BeanUtils.copyProperties(cartonOrderVO, cartonOrder);
+        }
+        return cartonOrder;
     }
 }

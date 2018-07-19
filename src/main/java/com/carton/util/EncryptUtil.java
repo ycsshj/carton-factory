@@ -28,7 +28,7 @@ public class EncryptUtil {
 
         try {
             MessageDigest md = MessageDigest.getInstance(KEY_MD5);
-            byte[] inputData = inputStr.getBytes();
+            byte[] inputData = inputStr.getBytes("utf-8");
             md.update(inputData);
             bigInteger = new BigInteger(md.digest());
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class EncryptUtil {
         BigInteger bigInteger = null;
         try {
             MessageDigest sha = MessageDigest.getInstance(KEY_SHA);
-            byte[] inputData = inputStr.getBytes();
+            byte[] inputData = inputStr.getBytes("utf-8");
             sha.update(inputData);
             bigInteger = new BigInteger(sha.digest());
         } catch (Exception e) {
@@ -76,7 +76,7 @@ public class EncryptUtil {
         logger.info("BASE64加密前: " + inputStr);
         String result = null;
         try {
-            result = new String(new BASE64Encoder().encode(inputStr.getBytes()));
+            result = new BASE64Encoder().encode(inputStr.getBytes("utf-8"));
         } catch (Exception e) {
             logger.error("exception: {}" + LogExceptionStackTrace.errorStackTrace(e));
             return null;

@@ -4,8 +4,6 @@ import com.carton.model.base.BaseEntity;
 
 public class CartonStock extends BaseEntity {
 
-    private Integer id;
-
     private String name;
 
     private Integer cartonCategoryId;
@@ -17,14 +15,6 @@ public class CartonStock extends BaseEntity {
     private Double costPrice;
 
     private CartonCategory cartonCategory;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

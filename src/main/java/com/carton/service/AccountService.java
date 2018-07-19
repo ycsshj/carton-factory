@@ -4,6 +4,7 @@ import com.carton.model.Account;
 import com.carton.vo.base.Result;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /************************************************************
@@ -20,4 +21,7 @@ public interface AccountService {
     Result addAccount(Account account);
 
     Result editAccount(Account account);
+
+    List<Map<String,Object>> getSimpleAccountList();
+
 }

@@ -54,7 +54,9 @@
                         <input type="checkbox" name="choseElement" th:value="${account.id}" onclick="clickElement(this)"/>
                     </td>
                     <td th:text="${account.name}">name</td>
-                    <td th:text="${account.gender}">gender</td>
+                    <td th:if="${account.gender eq 1}" th:text="男">gender</td>
+                    <td th:if="${account.gender eq 2}" th:text="女">gender</td>
+
                     <td th:text="${account.birthday}">birthday</td>
                     <td th:title="${account.address}" th:text="${account.address}">address</td>
                     <td th:text="${account.phone}">phone</td>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--suppress ThymeleafVariablesResolveInspection -->
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<form role="form" th:action="@{/cartonOrder/editCartonOrder}" id="editCartonOrderForm" class="form-horizontal" method="post">
+    <input type="hidden" name="id" th:value="${cartonOrder.id}"/>
+    <input type="hidden" name="cartonStockId" th:value="${cartonOrder.cartonStockId}"/>
+
+    <div class="form-group">
+
+        <label class="col-sm-2 control-label">选择库存: </label>
+        <div class="col-sm-6">
+            <!--<select class="form-control" name="cartonStockId" id="cartonStockId">
+                <option value="">请选择...</option>
+                <option th:each="cartonStock:${cartonStockList}" th:value="${cartonStock.id}"
+                        th:text="${cartonStock.simpleName}" th:selected="${cartonOrder.cartonStockId eq cartonStock.id}"></option>
+            </select>-->
+            <div th:each="cartonStock:${cartonStockList}" th:if="${cartonOrder.cartonStockId eq cartonStock.id}">
+                <span class="form-control" th:text="${cartonStock.simpleName}"/>
+            </div>
+
+        </div>
+
+        <label class="col-sm-2 control-label">选择客户: </label>
+        <div class="col-sm-2">
+            <select class="form-control" name="accountId" id="accountId">
+                <option value="">请选择...</option>
+                <option th:each="account:${accountList}" th:value="${account.id}" th:text="${account.name}"
+                        th:selected="${account.id eq cartonOrder.accountId}"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="name">订单名称: </label>
+        <div class="col-sm-4">
+            <input type="text" id="name" name="name" class="form-control" required="true" th:value="${cartonOrder.name}"/>
+        </div>
+
+        <label class="col-sm-2 control-label" for="amount">下单数量: </label>
+        <div class="col-sm-4">
+            <input type="text" id="amount" name="amount" class="form-control" required="true" readonly="readonly" th:value="${cartonOrder.amount}"/>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="salesPrice">销售单价: </label>
+        <div class="col-sm-4">
+            <input type="text" id="salesPrice" name="salesPrice" class="form-control" required="true" th:value="${cartonOrder.salesPrice}"/>
+        </div>
+
+        <label class="col-sm-2 control-label" for="publishDate">交货日期: </label>
+        <div class="col-sm-4" id="date">
+            <input type="text" id="publishDate" name="publishDate" class="form-control" required="true" readonly="readonly" th:value="${cartonOrder.publishDate}"/>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="comment">备注: </label>
+        <div class="col-sm-4">
+            <textarea id="comment" name="comment" class="form-control" th:text="${cartonOrder.comment}" required="true" style="width: 270%" rows="8"/>
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

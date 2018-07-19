@@ -5,6 +5,7 @@ import com.carton.vo.CartonStockVO;
 import com.carton.vo.base.Result;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /************************************************************
@@ -21,4 +22,6 @@ public interface CartonStockService {
     Result addCartonStock(CartonStock cartonStock);
 
     Result editCartonStock(CartonStock cartonStock);
+
+    List<Map<String,Object>> getSimpleCartonStockList();
 }

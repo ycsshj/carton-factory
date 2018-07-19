@@ -4,8 +4,6 @@ import com.carton.model.base.BaseEntity;
 
 public class Account extends BaseEntity {
 
-    private Integer id;
-
     private String name;
 
     private Integer gender;
@@ -17,14 +15,6 @@ public class Account extends BaseEntity {
     private String phone;
 
     private String hobby;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

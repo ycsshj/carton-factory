@@ -99,4 +99,14 @@ public class CartonStockController extends BaseController {
         return cartonStockService.editCartonStock(cartonStock);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/getSimpleCartonStockList", method = RequestMethod.GET)
+    public Result getSimpleCartonStockList() {
+
+        List<Map<String, Object>> categoryList = cartonStockService.getSimpleCartonStockList();
+
+        Result result = new Result();
+        result.setData(categoryList);
+        return result;
+    }
 }

@@ -1,10 +1,9 @@
 package com.carton.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.carton.mapper.CartonOrderMapper;
 import com.carton.mapper.CartonStockMapper;
-import com.carton.model.CartonCategoryExample;
-import com.carton.model.CartonStock;
-import com.carton.model.CartonStockExample;
+import com.carton.model.*;
 import com.carton.service.CartonStockService;
 import com.carton.util.ApiHelper;
 import com.carton.util.BaseBeanUtil;
@@ -14,16 +13,16 @@ import com.carton.vo.base.Result;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /************************************************************
  * @Description:
@@ -31,6 +30,7 @@ import java.util.Map;
  * @Date 2018-06-23 20:55
  ************************************************************/
 
+@Transactional
 @SuppressWarnings("Duplicates")
 @Service
 public class CartonStockServiceImpl implements CartonStockService {
@@ -38,6 +38,9 @@ public class CartonStockServiceImpl implements CartonStockService {
 
     @Autowired
     private CartonStockMapper cartonStockMapper;
+
+    @Autowired
+    private CartonOrderMapper cartonOrderMapper;
 
     @Override
     public PageInfo<CartonStock> getCartonStockList(Integer pageNum, Integer pageSize, Map<String, Object> params) {
@@ -90,6 +93,7 @@ public class CartonStockServiceImpl implements CartonStockService {
         try {
             cartonStock.setValid(true);
             cartonStock.setCreateDate(new Date());
+            cartonStock.setStockLeft(cartonStock.getStock());
             cartonStockMapper.insert(cartonStock);
 
         } catch (Exception e) {
@@ -101,20 +105,53 @@ public class CartonStockServiceImpl implements CartonStockService {
 
     @Override
     public Result editCartonStock(CartonStock cartonStock) {
+        Result result = new Result();
         try {
             CartonStock updateCartonStock = cartonStockMapper.selectByPrimaryKey(cartonStock.getId());
+
             if (updateCartonStock != null) {
-                BeanUtils.copyProperties(cartonStock, updateCartonStock, "valid", "createDate", "createUser");
 
-                updateCartonStock.setUpdateDate(new Date());
-                cartonStockMapper.updateByPrimaryKey(updateCartonStock);
-                return ApiHelper.getSuccessResult();
+                synchronized (String.valueOf(cartonStock.getId().intValue())) {
+                    BeanUtils.copyProperties(cartonStock, updateCartonStock, "valid", "createDate", "createUser");
+
+                    Integer stockOld = updateCartonStock.getStock();
+                    Integer stockLeftOld = updateCartonStock.getStockLeft();
+                    Integer stockNew = cartonStock.getStock();
+
+                    if ((stockOld - stockLeftOld) > stockNew) {
+                        result.setCode(Result.ERROR);
+                        result.setMessage("库存数不能小于已经使用的库存数");
+                        return result;
+                    }
+
+                    updateCartonStock.setStockLeft(stockNew - (stockOld - stockLeftOld));
+                    updateCartonStock.setUpdateDate(new Date());
+                    cartonStockMapper.updateByPrimaryKey(updateCartonStock);
+                    return result;
+                }
             }
-            return ApiHelper.getFailResult();
 
+            return ApiHelper.getFailResult();
         } catch (Exception e) {
             logger.error("exception: {}" + LogExceptionStackTrace.errorStackTrace(e));
             return ApiHelper.getFailResult();
         }
+    }
+
+    @Override
+    public List<Map<String, Object>> getSimpleCartonStockList() {
+        PageInfo<CartonStock> pageInfo = getCartonStockList(1, 9999, null);
+        List<CartonStock> cartonStockList = pageInfo.getList();
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(cartonStockList)) {
+            for (CartonStock cartonStock : cartonStockList) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", cartonStock.getId());
+                map.put("simpleName", cartonStock.getName() + "  总库存: " + cartonStock.getStock() + "  剩余库存: " + cartonStock.getStockLeft());
+                resultList.add(map);
+            }
+        }
+
+        return resultList;
     }
 }

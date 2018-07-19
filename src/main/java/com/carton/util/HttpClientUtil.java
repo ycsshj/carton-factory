@@ -15,6 +15,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Map;
 
 public class HttpClientUtil {
 
-    protected static Log log = LogFactory.getLog(HttpClientUtil.class);
+    protected static final Log log = LogFactory.getLog(HttpClientUtil.class);
 
     public static Map<String, String> restfulRequest(String url, String request, String timeOutSecond) {
         return HttpClientUtil.sendRequest(url, null, null, request, timeOutSecond, null, null, true);
@@ -150,9 +151,9 @@ public class HttpClientUtil {
         return resultMap;
     }
 
-    public static String getBase64Code(String userName, String passWord) {
+    public static String getBase64Code(String userName, String passWord) throws UnsupportedEncodingException {
         Base64 token = new Base64();
-        return token.encodeAsString(new String(userName + ":" + passWord).getBytes());
+        return token.encodeAsString((userName + ":" + passWord).getBytes("utf-8"));
     }
 
 }

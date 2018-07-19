@@ -65,6 +65,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                     user = JSON.parseObject(decrypt, User.class);
 
                     if (user != null) {
+                        request.getSession().setAttribute(Context.USER_INFO, JSON.toJSONString(user));
+                        request.getSession().setAttribute(Context.USER_NAME, user.getUserName());
                         flag = true;
                     }
                 }

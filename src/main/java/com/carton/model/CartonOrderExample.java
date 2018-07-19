@@ -166,6 +166,36 @@ public class CartonOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andNameLike(String value) {
+            addCriterion("name like", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotLike(String value) {
+            addCriterion("name not like", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameIn(List<String> values) {
+            addCriterion("name in", values, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotIn(List<String> values) {
+            addCriterion("name not in", values, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameBetween(String value1, String value2) {
+            addCriterion("name between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotBetween(String value1, String value2) {
+            addCriterion("name not between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
         public Criteria andCartonStockIdIsNull() {
             addCriterion("carton_stock_id is null");
             return (Criteria) this;
@@ -176,62 +206,62 @@ public class CartonOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdEqualTo(String value) {
+        public Criteria andCartonStockIdEqualTo(Integer value) {
             addCriterion("carton_stock_id =", value, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdNotEqualTo(String value) {
+        public Criteria andCartonStockIdNotEqualTo(Integer value) {
             addCriterion("carton_stock_id <>", value, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdGreaterThan(String value) {
+        public Criteria andCartonStockIdGreaterThan(Integer value) {
             addCriterion("carton_stock_id >", value, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdGreaterThanOrEqualTo(String value) {
+        public Criteria andCartonStockIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("carton_stock_id >=", value, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdLessThan(String value) {
+        public Criteria andCartonStockIdLessThan(Integer value) {
             addCriterion("carton_stock_id <", value, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdLessThanOrEqualTo(String value) {
+        public Criteria andCartonStockIdLessThanOrEqualTo(Integer value) {
             addCriterion("carton_stock_id <=", value, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdLike(String value) {
+        public Criteria andCartonStockIdLike(Integer value) {
             addCriterion("carton_stock_id like", value, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdNotLike(String value) {
+        public Criteria andCartonStockIdNotLike(Integer value) {
             addCriterion("carton_stock_id not like", value, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdIn(List<String> values) {
+        public Criteria andCartonStockIdIn(List<Integer> values) {
             addCriterion("carton_stock_id in", values, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdNotIn(List<String> values) {
+        public Criteria andCartonStockIdNotIn(List<Integer> values) {
             addCriterion("carton_stock_id not in", values, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdBetween(String value1, String value2) {
+        public Criteria andCartonStockIdBetween(Integer value1, Integer value2) {
             addCriterion("carton_stock_id between", value1, value2, "cartonStockId");
             return (Criteria) this;
         }
 
-        public Criteria andCartonStockIdNotBetween(String value1, String value2) {
+        public Criteria andCartonStockIdNotBetween(Integer value1, Integer value2) {
             addCriterion("carton_stock_id not between", value1, value2, "cartonStockId");
             return (Criteria) this;
         }
@@ -366,27 +396,27 @@ public class CartonOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateEqualTo(Date value) {
+        public Criteria andPublishDateEqualTo(String value) {
             addCriterion("publish_date =", value, "publishDate");
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateNotEqualTo(Date value) {
+        public Criteria andPublishDateNotEqualTo(String value) {
             addCriterion("publish_date <>", value, "publishDate");
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateGreaterThan(Date value) {
+        public Criteria andPublishDateGreaterThan(String value) {
             addCriterion("publish_date >", value, "publishDate");
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateGreaterThanOrEqualTo(Date value) {
+        public Criteria andPublishDateGreaterThanOrEqualTo(String value) {
             addCriterion("publish_date >=", value, "publishDate");
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateLessThan(Date value) {
+        public Criteria andPublishDateLessThan(String value) {
             addCriterion("publish_date <", value, "publishDate");
             return (Criteria) this;
         }
@@ -396,22 +426,22 @@ public class CartonOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateIn(List<Date> values) {
+        public Criteria andPublishDateIn(List<String> values) {
             addCriterion("publish_date in", values, "publishDate");
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateNotIn(List<Date> values) {
+        public Criteria andPublishDateNotIn(List<String> values) {
             addCriterion("publish_date not in", values, "publishDate");
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateBetween(Date value1, Date value2) {
+        public Criteria andPublishDateBetween(String value1, String value2) {
             addCriterion("publish_date between", value1, value2, "publishDate");
             return (Criteria) this;
         }
 
-        public Criteria andPublishDateNotBetween(Date value1, Date value2) {
+        public Criteria andPublishDateNotBetween(String value1, String value2) {
             addCriterion("publish_date not between", value1, value2, "publishDate");
             return (Criteria) this;
         }

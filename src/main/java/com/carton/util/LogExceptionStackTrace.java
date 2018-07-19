@@ -29,8 +29,13 @@ public class LogExceptionStackTrace {
             return sw.toString();
         } finally {
             try {
-                pw.close();
-                sw.close();
+                if (pw != null) {
+                    pw.close();
+                }
+
+                if (sw != null) {
+                    sw.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

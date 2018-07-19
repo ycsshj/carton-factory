@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.carton.mapper.AccountMapper;
 import com.carton.model.Account;
 import com.carton.model.AccountExample;
+import com.carton.model.CartonCategory;
 import com.carton.service.AccountService;
 import com.carton.util.ApiHelper;
 import com.carton.util.BaseBeanUtil;
@@ -11,16 +12,16 @@ import com.carton.util.LogExceptionStackTrace;
 import com.carton.vo.base.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /************************************************************
  * @Description:
@@ -28,6 +29,7 @@ import java.util.Map;
  * @Date 2018-06-23 20:54
  ************************************************************/
 
+@Transactional
 @SuppressWarnings("Duplicates")
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -107,5 +109,22 @@ public class AccountServiceImpl implements AccountService {
             logger.error("exception: {}" + LogExceptionStackTrace.errorStackTrace(e));
             return ApiHelper.getFailResult();
         }
+    }
+
+    @Override
+    public List<Map<String, Object>> getSimpleAccountList() {
+        PageInfo<Account> pageInfo = getAccountList(1, 9999, null);
+        List<Account> accountList = pageInfo.getList();
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(accountList)) {
+            for (Account account : accountList) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", account.getId());
+                map.put("name", account.getName());
+                resultList.add(map);
+            }
+        }
+
+        return resultList;
     }
 }

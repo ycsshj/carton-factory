@@ -2,28 +2,48 @@ package com.carton.model;
 
 import com.carton.model.base.BaseEntity;
 
-import java.util.Date;
-
 public class CartonOrder extends BaseEntity {
 
-    private Integer id;
+    private Integer accountId;
+
+    private String accountName;
+
+    private String name;
 
     private Integer cartonStockId;
+
+    private String cartonStockName;
 
     private Integer amount;
 
     private Double salesPrice;
 
-    private Date publishDate;
+    private String publishDate;
 
     private String comment;
 
-    public Integer getId() {
-        return id;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getCartonStockId() {
@@ -32,6 +52,14 @@ public class CartonOrder extends BaseEntity {
 
     public void setCartonStockId(Integer cartonStockId) {
         this.cartonStockId = cartonStockId;
+    }
+
+    public String getCartonStockName() {
+        return cartonStockName;
+    }
+
+    public void setCartonStockName(String cartonStockName) {
+        this.cartonStockName = cartonStockName;
     }
 
     public Integer getAmount() {
@@ -50,11 +78,11 @@ public class CartonOrder extends BaseEntity {
         this.salesPrice = salesPrice;
     }
 
-    public Date getPublishDate() {
+    public String getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(Date publishDate) {
+    public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
 

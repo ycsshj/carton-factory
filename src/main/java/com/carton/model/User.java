@@ -6,19 +6,9 @@ import java.util.Date;
 
 public class User extends BaseEntity{
 
-    private Integer id;
-
     private String userName;
 
     private String password;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;

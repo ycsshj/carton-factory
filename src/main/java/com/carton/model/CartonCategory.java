@@ -4,8 +4,6 @@ import com.carton.model.base.BaseEntity;
 
 public class CartonCategory extends BaseEntity {
 
-    private Integer id;
-
     private String cartonBigType;
 
     private String cartonBigTypeValue;
@@ -23,14 +21,6 @@ public class CartonCategory extends BaseEntity {
     private String cartonStandard;
 
     private String criticalStandard;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getCartonBigType() {
         return cartonBigType;

@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -28,6 +29,7 @@ import java.util.*;
  * @Date 2018-06-23 20:54
  ************************************************************/
 
+@Transactional
 @SuppressWarnings("Duplicates")
 @Service
 public class CartonCategoryServiceImpl implements CartonCategoryService {
@@ -121,19 +123,19 @@ public class CartonCategoryServiceImpl implements CartonCategoryService {
     @Override
     public List<Map<String, Object>> getSimpleCartonCategoryList() {
         PageInfo<CartonCategory> pageInfo = getCartonCategoryList(1, 9999, null);
-        List<CartonCategory> categoryVOList = pageInfo.getList();
-        List<Map<String, Object>> categoryList = new ArrayList<>();
-        if (CollectionUtils.isNotEmpty(categoryVOList)) {
-            for (CartonCategory cartonCategory : categoryVOList) {
+        List<CartonCategory> categoryList = pageInfo.getList();
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(categoryList)) {
+            for (CartonCategory cartonCategory : categoryList) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", cartonCategory.getId());
                 map.put("simpleName", cartonCategory.getCartonBigTypeValue() + " " + cartonCategory.getCartonSmallTypeValue()
                         + " 长:" + cartonCategory.getCartonLength() + " 宽:" + cartonCategory.getCartonWidth() + " 高:" + cartonCategory.getCartonHeight());
-                categoryList.add(map);
+                resultList.add(map);
             }
         }
 
-        return categoryList;
+        return resultList;
     }
 
 }

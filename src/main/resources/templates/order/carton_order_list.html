@@ -14,22 +14,23 @@
     </div>
 
     <div class="main-content">
-        <form method="get" th:action="@{/account/accountList}" id="searchForm">
+        <form method="get" th:action="@{/cartonOrder/cartonOrderList}" id="searchForm">
             <input type="hidden" name="pageNum" id="pageNum" th:value="${pageNum}"/>
             <input type="hidden" name="pageSize" id="pageSize" th:value="${pageSize}"/>
 
             <div class="row form-horizontal">
                 <div class="form-group">
-                    <label class="col-md-1 control-label">客户名称: </label>
+                    <label class="col-md-1 control-label">订单名称: </label>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" name="nameParam" id="nameParam" placeholder="请输入客户名称" th:value="${nameParam}"/>
+                        <input type="text" class="form-control" name="nameParam" id="nameParam" placeholder="请输入订单名称" th:value="${nameParam}"/>
                     </div>
 
                 </div>
 
                 <div class="btn-toolbar list-toolbar" style="float: right; margin-right: 40%">
                     <button type="submit" class="btn btn-default" placeholder="查询">搜索</button>
-                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#addAccountModal" th:onclick="'toAddPage()'"><i class="fa fa-plus"></i> 新增</a>
+                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#addCartonOrderModal" th:onclick="'toAddPage()'"><i class="fa fa-plus"></i> 新增</a>
+                    <button type="button" class="btn btn-default" onclick="exportOrderInfo();">导出报表</button>
                 </div>
 
             </div>
@@ -39,29 +40,31 @@
             <thead>
                 <tr>
                     <th width="3%"><input type="checkbox" id="checkAll" onclick="checkAll()"/></th>
-                    <th width="10%">客户名称</th>
-                    <th width="7%">客户性别</th>
-                    <th width="15%">客户生日</th>
-                    <th width="20%">客户地址</th>
-                    <th width="10%">客户电话</th>
-                    <th width="25%">客户爱好</th>
+                    <th width="15%">客户名称</th>
+                    <th width="15%">订单名称</th>
+                    <th width="25%">选择库存</th>
+                    <th width="7%">下单数量</th>
+                    <th width="10%">销售单价</th>
+                    <th width="15%">交货日期</th>
+                    <th width="25%">备注</th>
                     <th width="10%">操作</th>
                 </tr>
             </thead>
             <tbody th:remove="all-but-first">
-                <tr th:each="account:${accountList}">
+                <tr th:each="cartonOrder:${cartonOrderList}">
                     <td>
-                        <input type="checkbox" name="choseElement" th:value="${account.id}" onclick="clickElement(this)"/>
+                        <input type="checkbox" name="choseElement" th:value="${cartonOrder.id}" onclick="clickElement(this)"/>
                     </td>
-                    <td th:text="${account.name}">name</td>
-                    <td th:text="${account.gender}">gender</td>
-                    <td th:text="${account.birthday}">birthday</td>
-                    <td th:title="${account.address}" th:text="${account.address}">address</td>
-                    <td th:text="${account.phone}">phone</td>
-                    <td th:title="${account.hobby}" th:text="${account.hobby}">hobby</td>
+                    <td th:text="${cartonOrder.accountName}">accountName</td>
+                    <td th:text="${cartonOrder.name}">name</td>
+                    <td th:text="${cartonOrder.cartonStockName}">cartonStockName</td>
+                    <td th:text="${cartonOrder.amount}">amount</td>
+                    <td th:text="${cartonOrder.salesPrice}">salesPrice</td>
+                    <td th:text="${cartonOrder.publishDate}">publishDate</td>
+                    <td th:title="${cartonOrder.comment}" th:text="${cartonOrder.comment}">comment</td>
                     <td>
-                        <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#editAccountModal" th:onclick="'toEditPage(' + ${account.id} + ')'">修改</a>
-                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" th:onclick="'delete(\'' + ${account.id} + '\')'">删除</a>
+                        <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#editCartonOrderModal" th:onclick="'toEditPage(' + ${cartonOrder.id} + ')'">修改</a>
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" th:onclick="'delete(\'' + ${cartonOrder.id} + '\')'">删除</a>
                     </td>
                 </tr>
             </tbody>
@@ -74,20 +77,20 @@
     </div>
 
     <!--新增模态框-->
-    <div class="modal small fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModal" aria-hidden="true"  data-backdrop="static">
+    <div class="modal small fade" id="addCartonOrderModal" tabindex="-1" role="dialog" aria-labelledby="addCartonOrderModal" aria-hidden="true"  data-backdrop="static">
         <div class="modal-dialog" style="width:40%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
-                    <h2 id="addAccountLabel">新增客户信息</h2>
+                    <h2 id="addCartonOrderLabel">新增订单信息</h2>
                 </div>
-                <div class="modal-body" id="addAccountBody">
+                <div class="modal-body" id="addCartonOrderBody">
 
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="addAccountBtn">保存</button>
+                    <button type="button" class="btn btn-primary" id="addCartonOrderBtn">保存</button>
                 </div>
 
             </div>
@@ -95,20 +98,20 @@
     </div>
 
     <!--修改模态框-->
-    <div class="modal small fade" id="editAccountModal" tabindex="-1" role="dialog" aria-labelledby="editAccountModal" aria-hidden="true"  data-backdrop="static">
+    <div class="modal small fade" id="editCartonOrderModal" tabindex="-1" role="dialog" aria-labelledby="editCartonOrderModal" aria-hidden="true"  data-backdrop="static">
         <div class="modal-dialog" style="width:40%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
-                    <h2 id="editAccountLabel">修改客户信息</h2>
+                    <h2 id="editCartonOrderLabel">修改订单信息</h2>
                 </div>
-                <div class="modal-body" id="editAccountBody">
+                <div class="modal-body" id="editCartonOrderBody">
 
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="editAccountBtn">保存</button>
+                    <button type="button" class="btn btn-primary" id="editCartonOrderBtn">保存</button>
                 </div>
 
             </div>
@@ -116,7 +119,7 @@
     </div>
 
     <!--必须要在content里面-->
-    <script th:src="@{/js/account.js(t=${timestamp})}" type="text/javascript"/>
+    <script th:src="@{/js/carton_order.js(t=${timestamp})}" type="text/javascript"/>
 
 </div>
 </body>

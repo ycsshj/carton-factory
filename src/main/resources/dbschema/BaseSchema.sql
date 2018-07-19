@@ -81,10 +81,12 @@ CREATE TABLE `account` (
 DROP TABLE IF EXISTS `carton_order`;
 CREATE TABLE `carton_order` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`account_id` int(11) NOT NULL COMMENT '客户主键',
+	`name` varchar(255) NOT NULL	COMMENT '订单名称',
 	`carton_stock_id` varchar(255) NOT NULL	COMMENT '下单纸箱',
 	`amount` int(11) NOT NULL COMMENT '下单数量',
 	`sales_price` DOUBLE(10,3) DEFAULT 0 COMMENT '销售单价',
-	`publish_date` datetime DEFAULT NULL COMMENT '交货日期',
+	`publish_date`  varchar(255) DEFAULT NULL COMMENT '交货日期',
 	`comment` varchar(2000) DEFAULT NULL COMMENT '备注',
 	`create_date` datetime DEFAULT NULL,
 	`create_user` varchar(255) DEFAULT NULL,

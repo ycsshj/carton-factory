@@ -8,12 +8,12 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="name">客户名称: </label>
         <div class="col-sm-4">
-            <input type="text" id="name" name="name" class="form-control" required="true"/>
+            <input type="text" id="name" name="name" class="form-control" required="required"/>
         </div>
 
         <label class="col-sm-2 control-label" for="gender">客户性别: </label>
         <div class="col-sm-2" id="gender">
-            <input type="radio" name="gender" value="1" id="man"/>
+            <input type="radio" name="gender" value="1" id="man" checked="checked"/>
             <label class="control-label" for="man">男</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
             <input type="radio" name="gender" value="2" id="woman"/>
@@ -23,13 +23,13 @@
 
     <div class="form-group">
         <label class="col-sm-2 control-label" for="birthday">客户生日: </label>
-        <div class="col-sm-4">
-            <input type="text" id="birthday" name="birthday" class="form-control" required="true" readonly="readonly"/>
+        <div class="col-sm-4" id="date">
+            <input type="text" id="birthday" name="birthday" class="form-control" required="required" readonly="readonly"/>
         </div>
 
         <label class="col-sm-2 control-label" for="phone">联系方式: </label>
         <div class="col-sm-4">
-            <input type="text" id="phone" name="phone" class="form-control" required="true"/>
+            <input type="text" id="phone" name="phone" class="form-control" required="required"/>
         </div>
 
     </div>
@@ -37,7 +37,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="address">客户地址: </label>
         <div class="col-sm-10">
-            <input type="text" id="address" name="address" class="form-control" required="true"/>
+            <input type="text" id="address" name="address" class="form-control" required="required"/>
         </div>
 
     </div>
@@ -45,7 +45,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="hobby">喜好: </label>
         <div class="col-sm-4">
-            <textarea id="hobby" name="hobby" class="form-control" required="true" style="width: 270%" rows="8"/>
+            <textarea id="hobby" name="hobby" class="form-control" required="required" style="width: 270%" rows="8"/>
         </div>
     </div>
 

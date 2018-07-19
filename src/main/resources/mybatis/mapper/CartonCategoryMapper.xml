@@ -107,9 +107,13 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
 
     select
-    <include refid="Base_Column_List" />
-    from carton_category
-    where id = #{id,jdbcType=INTEGER}
+    carton.id, carton.carton_big_type, carton.carton_small_type, carton.carton_length, carton.carton_width, carton.carton_height,
+    carton.carton_standard, carton.critical_standard, carton.create_date, carton.create_user, carton.update_date, carton.update_user,
+    carton.valid, bigType.lov_value as cartonBigTypeValue,smallType.lov_value as cartonSmallTypeValue
+    from carton_category carton
+    left join lov bigType on carton.carton_big_type = bigType.lov_code and bigType.category = "CARTON_CATEGORY"
+    left join lov smallType on carton.carton_small_type = smallType.lov_code and smallType.category = "CARTON_CATEGORY"
+    where carton.id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     

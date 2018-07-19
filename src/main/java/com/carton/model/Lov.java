@@ -4,8 +4,6 @@ import com.carton.model.base.BaseEntity;
 
 public class Lov extends BaseEntity{
 
-    private Integer id;
-
     private String category;
 
     private String lovCode;
@@ -13,14 +11,6 @@ public class Lov extends BaseEntity{
     private String lovValue;
 
     private String parentCode;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getCategory() {
         return category;

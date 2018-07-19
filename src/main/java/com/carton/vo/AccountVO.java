@@ -4,7 +4,7 @@ import com.carton.vo.base.BaseVO;
 
 public class AccountVO extends BaseVO {
 
-    private Integer id;
+    private Integer accountId;
 
     private String name;
 
@@ -18,12 +18,12 @@ public class AccountVO extends BaseVO {
 
     private String hobby;
 
-    public Integer getId() {
-        return id;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
     public String getName() {
