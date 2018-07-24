@@ -131,7 +131,7 @@ public class CartonOrderController extends BaseController {
                     "stockName", "stock", "stockLeft",
                     "orderName", "amount", "publishDate"};
             hssfWorkbook = exporterUtil.exportExcel(columns, fields, cartonOrderList);
-            String fileName = "客户订单_" + DateUtils.getCurrentDateTime() + ".xls";
+            String fileName = "客户订单_" + DateUtils.getCurrentDateTimeShort() + ".xls";
 
             //清空response
             response.reset();

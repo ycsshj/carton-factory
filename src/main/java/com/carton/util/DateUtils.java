@@ -43,6 +43,10 @@ public class DateUtils {
         return LocalDateTime.now().format(FORMATTER_DATE_TIME);
     }
 
+    public static String getCurrentDateTimeShort() {
+        return LocalDateTime.now().format(FORMATTER_DATE_TIME_SHORT);
+    }
+
     public static String getCurrentDate(DateTimeFormatter formatter) {
         return LocalDateTime.now().format(formatter);
     }
