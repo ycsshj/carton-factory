@@ -72,7 +72,10 @@ public class AESUtil {
 
             //2.根据ecnodeRules规则初始化密钥生成器
             //生成一个128位的随机源,根据传入的字节数组
-            kgen.init(128, new SecureRandom(key.getBytes("utf-8")));
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            random.setSeed(key.getBytes("utf-8"));
+
+            kgen.init(128, random);
 
             //3.产生原始对称密钥
             SecretKey secretKey = kgen.generateKey();
